@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { ServiceCategory, INDIAN_STATES, IndianService } from "@/lib/services-data";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Loader2, Link as LinkIcon, Filter, MapPin, ChevronRight } from "lucide-react";
+import { Search, Loader2, Link as LinkIcon, Filter, MapPin, ChevronRight, Clock } from "lucide-react";
 import { collection, query, orderBy } from "firebase/firestore";
 import { useFirestore, useCollection, useMemoFirebase } from "@/firebase";
 import Link from "next/link";
@@ -103,19 +103,27 @@ function ServiceGridContent() {
         </div>
       </div>
 
-      {/* Results List - Now linking to detail page */}
+      {/* Results List - Links to detail page with Last Date highlight */}
       <div className="border rounded-2xl bg-card overflow-hidden shadow-md">
         {filteredServices.length > 0 ? (
           filteredServices.map((service, i) => (
             <Link 
               key={service.id}
               href={`/services/${service.id}`}
-              className={`group flex items-center justify-between px-5 md:px-8 py-5 md:py-6 hover:bg-primary/[0.03] transition-all ${i !== filteredServices.length - 1 ? 'border-b' : ''}`}
+              className={`group flex items-center justify-between px-4 md:px-8 py-4 md:py-6 hover:bg-primary/[0.03] transition-all ${i !== filteredServices.length - 1 ? 'border-b' : ''}`}
             >
               <div className="space-y-1.5 flex-1 min-w-0 pr-4">
-                <h3 className="font-bold text-sm md:text-lg group-hover:text-primary transition-colors line-clamp-1">{service.name}</h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="font-bold text-sm md:text-lg group-hover:text-primary transition-colors line-clamp-1">
+                    {service.name}
+                  </h3>
+                  {service.isPopular && (
+                    <span className="bg-orange-500 text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-tighter">Hot</span>
+                  )}
+                </div>
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                  <div className="text-[9px] md:text-[10px] uppercase font-black tracking-widest text-primary/70">
+                  <div className="text-[9px] md:text-[10px] uppercase font-black tracking-widest text-primary/70 flex items-center gap-1">
+                    <MapPin className="w-2.5 h-2.5" />
                     {service.state || "All India"}
                   </div>
                   <div className="text-[9px] md:text-[10px] uppercase font-bold tracking-widest text-muted-foreground opacity-50">
@@ -123,13 +131,17 @@ function ServiceGridContent() {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-3 shrink-0">
-                {service.lastDate && (
-                  <span className="text-[9px] md:text-xs font-bold text-red-600 bg-red-500/10 px-2 md:px-3 py-1.5 rounded-lg border border-red-500/20 whitespace-nowrap hidden xs:inline">
-                    Till: {service.lastDate}
-                  </span>
+              
+              <div className="flex items-center gap-2 md:gap-4 shrink-0">
+                {service.lastDate && service.lastDate.trim() !== "" && (
+                  <div className="flex flex-col items-end mr-2 md:mr-4">
+                    <span className="text-[7px] md:text-[9px] font-bold uppercase tracking-widest text-red-500/60 leading-none mb-1 hidden xs:block">Last Date</span>
+                    <span className="text-[10px] md:text-sm font-black text-red-600 bg-red-500/5 px-2 py-1 rounded-lg border border-red-500/10 whitespace-nowrap">
+                      {service.lastDate}
+                    </span>
+                  </div>
                 )}
-                <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
               </div>
             </Link>
           ))
