@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useRef, useEffect } from "react";
@@ -12,22 +11,24 @@ import {
   X, 
   Loader2, 
   Sparkles,
-  User
+  User,
+  MessageCircle
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
- * AI Concierge Widget - Career and Exam Assistant.
- * Fixed to the bottom right corner of the screen.
+ * Advanced AI Concierge Widget.
  */
 export function Concierge() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<{ role: 'user' | 'model', content: string }[]>([
-    { role: 'model', content: "Namaste! I'm your Smart Bharat Concierge. How can I help you with your career or exams today?" }
+    { role: 'model', content: "Namaste! Main aapka Smart Bharat Concierge hoon. Aaj main aapki career ya exams mein kaise madad kar sakta hoon?" }
   ]);
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const suggestions = ["SSC Results kab aayenge?", "Latest Admit Cards", "UPSC 2026 Calendar", "Bihar Jobs"];
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -36,12 +37,13 @@ export function Concierge() {
         scrollContainer.scrollTop = scrollContainer.scrollHeight;
       }
     }
-  }, [messages, isOpen]);
+  }, [messages, isOpen, isLoading]);
 
-  async function handleSend() {
-    if (!input.trim() || isLoading) return;
+  async function handleSend(overrideInput?: string) {
+    const messageToSend = overrideInput || input;
+    if (!messageToSend.trim() || isLoading) return;
 
-    const userMessage = input.trim();
+    const userMessage = messageToSend.trim();
     setInput("");
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setIsLoading(true);
@@ -53,7 +55,7 @@ export function Concierge() {
       });
       setMessages(prev => [...prev, { role: 'model', content: result.response }]);
     } catch (error) {
-      setMessages(prev => [...prev, { role: 'model', content: "I'm having trouble connecting to my intelligence core. Please try again in a few moments." }]);
+      setMessages(prev => [...prev, { role: 'model', content: "I'm having trouble connecting right now. Please try again soon." }]);
     } finally {
       setIsLoading(false);
     }
@@ -64,84 +66,111 @@ export function Concierge() {
       {!isOpen && (
         <Button 
           onClick={() => setIsOpen(true)}
-          className="w-14 h-14 rounded-full shadow-2xl bg-primary hover:bg-primary/90 transition-all hover:scale-110 flex items-center justify-center group"
+          className="w-14 h-14 rounded-full shadow-2xl bg-primary hover:bg-primary/90 transition-all hover:scale-110 flex items-center justify-center group relative"
         >
           <Sparkles className="w-6 h-6 text-white group-hover:rotate-12 transition-transform" />
-          <span className="absolute -top-12 right-0 bg-primary text-white text-[10px] font-bold py-1 px-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">
-            Ask Smart AI
+          <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white animate-bounce" />
+          <span className="absolute -left-32 top-1/2 -translate-y-1/2 bg-black/80 text-white text-[10px] font-bold py-1.5 px-3 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+            Ask Smart AI Assistant
           </span>
         </Button>
       )}
 
       {isOpen && (
-        <div className="w-[90vw] md:w-[400px] h-[600px] max-h-[80vh] bg-card border shadow-2xl rounded-2xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-5">
+        <div className="w-[90vw] md:w-[400px] h-[600px] max-h-[85vh] bg-card border shadow-2xl rounded-3xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-5">
+          {/* Header */}
           <div className="p-4 bg-primary text-primary-foreground flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-1.5 bg-white/20 rounded-lg">
+              <div className="p-2 bg-white/20 rounded-xl">
                 <Bot className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-sm leading-none">Smart Bharat Concierge</h3>
-                <p className="text-[10px] opacity-70">Official Career & Exam Assistant</p>
+                <h3 className="font-bold text-sm leading-none">Bharat Concierge AI</h3>
+                <p className="text-[10px] opacity-70 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+                  Official Assistant • Hinglish
+                </p>
               </div>
             </div>
             <Button 
               variant="ghost" 
               size="icon" 
               onClick={() => setIsOpen(false)}
-              className="hover:bg-white/10 text-primary-foreground"
+              className="hover:bg-white/10 text-primary-foreground rounded-full"
             >
               <X className="w-5 h-5" />
             </Button>
           </div>
 
-          <ScrollArea className="flex-1 p-4" ref={scrollRef}>
-            <div className="space-y-4 pb-4">
+          {/* Messages */}
+          <ScrollArea className="flex-1 p-4 bg-muted/5" ref={scrollRef}>
+            <div className="space-y-6 pb-4">
               {messages.map((msg, i) => (
                 <div key={i} className={cn(
                   "flex items-start gap-3",
                   msg.role === 'user' ? "flex-row-reverse" : ""
                 )}>
                   <div className={cn(
-                    "p-2 rounded-lg shrink-0",
-                    msg.role === 'user' ? "bg-primary text-primary-foreground" : "bg-muted"
+                    "p-2 rounded-xl shrink-0 shadow-sm",
+                    msg.role === 'user' ? "bg-primary text-primary-foreground" : "bg-card border"
                   )}>
-                    {msg.role === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
+                    {msg.role === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4 text-primary" />}
                   </div>
                   <div className={cn(
-                    "max-w-[80%] p-3 rounded-2xl text-sm leading-relaxed",
-                    msg.role === 'user' ? "bg-primary/10 border border-primary/20 rounded-tr-none" : "bg-muted/50 border rounded-tl-none"
+                    "max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed shadow-sm",
+                    msg.role === 'user' ? "bg-primary text-primary-foreground rounded-tr-none" : "bg-card border rounded-tl-none"
                   )}>
                     {msg.content}
                   </div>
                 </div>
               ))}
               {isLoading && (
-                <div className="flex items-center gap-2 text-muted-foreground animate-pulse ml-12">
-                  <Loader2 className="w-3 h-3 animate-spin" />
-                  <span className="text-xs font-medium">Thinking...</span>
+                <div className="flex items-center gap-3 ml-12">
+                  <div className="bg-card border p-3 rounded-2xl rounded-tl-none flex items-center gap-2">
+                    <Loader2 className="w-3 h-3 animate-spin text-primary" />
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Searching Directory...</span>
+                  </div>
                 </div>
               )}
             </div>
           </ScrollArea>
 
-          <div className="p-4 border-t bg-card/50">
+          {/* Suggestions */}
+          {messages.length < 3 && !isLoading && (
+            <div className="px-4 py-2 flex flex-wrap gap-2 bg-muted/5">
+              {suggestions.map((s, i) => (
+                <button 
+                  key={i}
+                  onClick={() => handleSend(s)}
+                  className="text-[10px] font-bold bg-card border rounded-full px-3 py-1.5 hover:border-primary hover:text-primary transition-all shadow-sm"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Input Area */}
+          <div className="p-4 border-t bg-card">
             <div className="flex gap-2">
               <Input 
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="Ask about exams or jobs..."
-                className="rounded-full bg-background"
+                placeholder="Exams ya results ke baare mein puchein..."
+                className="rounded-full bg-muted/30 border-none focus-visible:ring-2 focus-visible:ring-primary h-12"
               />
               <Button 
-                onClick={handleSend}
+                onClick={() => handleSend()}
                 disabled={isLoading || !input.trim()}
-                className="rounded-full px-4"
+                className="rounded-full w-12 h-12 p-0 shadow-lg"
               >
-                <Send className="w-4 h-4" />
+                <Send className="w-5 h-5" />
               </Button>
             </div>
+            <p className="text-[9px] text-center text-muted-foreground mt-3 uppercase tracking-tighter">
+              AI generated answers • Verify from official sources
+            </p>
           </div>
         </div>
       )}
