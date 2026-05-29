@@ -9,13 +9,12 @@ import { Concierge } from "@/components/Concierge";
 import { 
   ChevronLeft, 
   ExternalLink, 
-  Calendar, 
-  MapPin, 
   ShieldCheck, 
   Clock,
   Briefcase,
   AlertCircle,
-  Info
+  Info,
+  MapPin
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -141,29 +140,17 @@ export default function ServiceDetails() {
               </div>
             </section>
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="p-5 bg-muted/30 rounded-2xl border flex items-center gap-4">
-                <div className="p-3 bg-primary/10 rounded-xl text-primary">
-                  <Briefcase className="w-6 h-6" />
+            {service?.lastDate && (
+              <div className="p-5 bg-red-500/5 rounded-2xl border border-red-500/10 flex items-center gap-4 max-w-sm">
+                <div className="p-3 bg-red-500/10 rounded-xl text-red-600">
+                  <Clock className="w-6 h-6" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Department / State</p>
-                  <p className="font-bold">{service?.state || "All India"}</p>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-red-600/70">Last Date / Status</p>
+                  <p className="font-bold text-red-600">{service?.lastDate}</p>
                 </div>
               </div>
-
-              {service?.lastDate && (
-                <div className="p-5 bg-red-500/5 rounded-2xl border border-red-500/10 flex items-center gap-4">
-                  <div className="p-3 bg-red-500/10 rounded-xl text-red-600">
-                    <Clock className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-red-600/70">Last Date / Status</p>
-                    <p className="font-bold text-red-600">{service?.lastDate}</p>
-                  </div>
-                </div>
-              )}
-            </div>
+            )}
 
             <div className="pt-8 border-t flex flex-col items-center gap-6">
               <Button 
