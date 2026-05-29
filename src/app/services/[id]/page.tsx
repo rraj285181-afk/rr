@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useParams } from "next/navigation";
@@ -126,6 +127,19 @@ export default function ServiceDetails() {
           </div>
 
           <div className="p-8 md:p-12 space-y-10">
+            {/* Last Date Highlight - Moved up for better visibility */}
+            {service?.lastDate && service.lastDate.trim() !== "" && (
+              <div className="p-6 bg-red-500/5 rounded-2xl border border-red-500/10 flex items-center gap-5 shadow-sm">
+                <div className="p-4 bg-red-500/10 rounded-2xl text-red-600 animate-pulse">
+                  <Clock className="w-8 h-8" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-red-600/70 mb-1">Important: Last Date / Status</p>
+                  <p className="font-black text-xl md:text-2xl text-red-600">{service?.lastDate}</p>
+                </div>
+              </div>
+            )}
+
             <section className="space-y-4">
               <h2 className="text-xl font-bold flex items-center gap-2">
                 <Info className="w-5 h-5 text-primary" />
@@ -139,18 +153,6 @@ export default function ServiceDetails() {
                 )}
               </div>
             </section>
-
-            {service?.lastDate && (
-              <div className="p-5 bg-red-500/5 rounded-2xl border border-red-500/10 flex items-center gap-4 max-w-sm">
-                <div className="p-3 bg-red-500/10 rounded-xl text-red-600">
-                  <Clock className="w-6 h-6" />
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-red-600/70">Last Date / Status</p>
-                  <p className="font-bold text-red-600">{service?.lastDate}</p>
-                </div>
-              </div>
-            )}
 
             <div className="pt-8 border-t flex flex-col items-center gap-6">
               <Button 
