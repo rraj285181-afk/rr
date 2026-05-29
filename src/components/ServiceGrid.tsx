@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useMemo, useEffect, Suspense } from "react";
@@ -5,13 +6,14 @@ import { useSearchParams } from "next/navigation";
 import { ServiceCategory, INDIAN_STATES, IndianService } from "@/lib/services-data";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Loader2, Link as LinkIcon, Filter, MapPin } from "lucide-react";
+import { Search, Loader2, Link as LinkIcon, Filter, MapPin, ChevronRight } from "lucide-react";
 import { collection, query, orderBy } from "firebase/firestore";
 import { useFirestore, useCollection, useMemoFirebase } from "@/firebase";
+import Link from "next/link";
 
 export function ServiceGrid() {
   return (
-    <Suspense fallback={<div className="py-12 text-center text-muted-foreground font-bold">Connecting to Directory...</div>}>
+    <Suspense fallback={<div className="py-12 text-center text-muted-foreground font-bold italic">Connecting to Directory...</div>}>
       <ServiceGridContent />
     </Suspense>
   );
@@ -101,15 +103,13 @@ function ServiceGridContent() {
         </div>
       </div>
 
-      {/* Results List */}
+      {/* Results List - Now linking to detail page */}
       <div className="border rounded-2xl bg-card overflow-hidden shadow-md">
         {filteredServices.length > 0 ? (
           filteredServices.map((service, i) => (
-            <a 
+            <Link 
               key={service.id}
-              href={service.url.startsWith('http') ? service.url : `https://${service.url}`} 
-              target="_blank" 
-              rel="noopener noreferrer" 
+              href={`/services/${service.id}`}
               className={`group flex items-center justify-between px-5 md:px-8 py-5 md:py-6 hover:bg-primary/[0.03] transition-all ${i !== filteredServices.length - 1 ? 'border-b' : ''}`}
             >
               <div className="space-y-1.5 flex-1 min-w-0 pr-4">
@@ -123,14 +123,15 @@ function ServiceGridContent() {
                   </div>
                 </div>
               </div>
-              {service.lastDate && (
-                <div className="shrink-0">
-                  <span className="text-[9px] md:text-xs font-bold text-red-600 bg-red-500/10 px-2 md:px-3 py-1.5 rounded-lg border border-red-500/20 whitespace-nowrap">
+              <div className="flex items-center gap-3 shrink-0">
+                {service.lastDate && (
+                  <span className="text-[9px] md:text-xs font-bold text-red-600 bg-red-500/10 px-2 md:px-3 py-1.5 rounded-lg border border-red-500/20 whitespace-nowrap hidden xs:inline">
                     Till: {service.lastDate}
                   </span>
-                </div>
-              )}
-            </a>
+                )}
+                <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+              </div>
+            </Link>
           ))
         ) : (
           <div className="py-24 text-center opacity-30">
