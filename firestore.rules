@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Sabhi access by default band hai
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Services collection: Sirf public read allowed hai.
+    // Client-side se koi bhi 'write' (create, update, delete) nahi kar sakta.
+    match /services/{serviceId} {
+      allow read: if true;
+      allow write: if false; 
+    }
+  }
+}
