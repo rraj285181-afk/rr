@@ -134,9 +134,9 @@ function ServiceGridContent() {
               
               <div className="flex items-center gap-2 md:gap-4 shrink-0">
                 {service.lastDate && service.lastDate.trim() !== "" && (
-                  <div className="flex flex-col items-end mr-2 md:mr-4">
-                    <span className="text-[7px] md:text-[9px] font-bold uppercase tracking-widest text-red-500/60 leading-none mb-1 hidden xs:block">Last Date</span>
-                    <span className="text-[10px] md:text-sm font-black text-red-600 bg-red-500/5 px-2 py-1 rounded-lg border border-red-500/10 whitespace-nowrap">
+                  <div className="flex flex-col items-end">
+                    <span className="text-[10px] md:text-sm font-black text-red-600 bg-red-500/5 px-2 md:px-3 py-1.5 rounded-lg border border-red-500/10 whitespace-nowrap shadow-sm">
+                      <span className="text-[8px] md:text-[10px] font-bold uppercase tracking-tighter md:tracking-widest opacity-60 mr-1">Last Date:</span>
                       {service.lastDate}
                     </span>
                   </div>
