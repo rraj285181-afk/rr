@@ -3,6 +3,7 @@ import { ServiceGrid } from "@/components/ServiceGrid";
 import { AdBanner } from "@/components/AdBanner";
 import { Marquee } from "@/components/Marquee";
 import { Concierge } from "@/components/Concierge";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Calendar, Briefcase, Award, Bell, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
@@ -18,7 +19,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      {/* Navigation - Optimized for Mobile */}
+      {/* Navigation - Optimized for Mobile with Theme Toggle */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -30,12 +31,13 @@ export default function Home() {
             </Link>
           </div>
           
-          <div className="flex items-center gap-3 md:gap-6">
-            <div className="hidden sm:flex items-center gap-4 text-xs md:text-sm font-bold uppercase tracking-wider">
+          <div className="flex items-center gap-2 md:gap-4">
+            <div className="hidden sm:flex items-center gap-4 text-xs md:text-sm font-bold uppercase tracking-wider mr-2">
               <a href="#directory" className="hover:text-primary transition-colors">Directory</a>
               <a href="#calendar" className="hover:text-primary transition-colors">Calendar</a>
             </div>
             <StatusTracker />
+            <ThemeToggle />
           </div>
         </div>
       </nav>

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useParams } from "next/navigation";
@@ -7,6 +6,7 @@ import { doc } from "firebase/firestore";
 import { IndianService } from "@/lib/services-data";
 import { AdBanner } from "@/components/AdBanner";
 import { Concierge } from "@/components/Concierge";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { 
   ChevronLeft, 
   ExternalLink, 
@@ -91,11 +91,14 @@ export default function ServiceDetails() {
             <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
             <span className="hidden sm:inline">Portal Home</span>
           </Link>
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-primary rounded-full flex items-center justify-center shadow-md">
-              <span className="text-white font-black text-xs">J</span>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 mr-2">
+              <div className="w-7 h-7 bg-primary rounded-full flex items-center justify-center shadow-md">
+                <span className="text-white font-black text-xs">J</span>
+              </div>
+              <span className="text-sm font-bold text-primary tracking-tight hidden xs:inline">JobIndians</span>
             </div>
-            <span className="text-sm font-bold text-primary tracking-tight">JobIndians</span>
+            <ThemeToggle />
           </div>
         </div>
       </nav>
@@ -127,7 +130,7 @@ export default function ServiceDetails() {
           </div>
 
           <div className="p-8 md:p-12 space-y-10">
-            {/* Last Date Highlight - Moved up for better visibility */}
+            {/* Last Date Highlight */}
             {service?.lastDate && service.lastDate.trim() !== "" && (
               <div className="p-6 bg-red-500/5 rounded-2xl border border-red-500/10 flex items-center gap-5 shadow-sm">
                 <div className="p-4 bg-red-500/10 rounded-2xl text-red-600 animate-pulse">
