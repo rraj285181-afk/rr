@@ -144,11 +144,11 @@ export default function ServiceDetails() {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-5 bg-muted/30 rounded-2xl border flex items-center gap-4">
                 <div className="p-3 bg-primary/10 rounded-xl text-primary">
-                  <Calendar className="w-6 h-6" />
+                  <Briefcase className="w-6 h-6" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Category</p>
-                  <p className="font-bold">{service?.category}</p>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Department / State</p>
+                  <p className="font-bold">{service?.state || "All India"}</p>
                 </div>
               </div>
 

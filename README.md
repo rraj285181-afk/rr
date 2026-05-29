@@ -1,4 +1,4 @@
-
+story
 # JobIndians Portal - Professional Indian Citizen Services
 
 Official unified portal for Indian exam results, admit cards, and recruitment notifications.
