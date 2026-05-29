@@ -21,6 +21,30 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 /**
+ * Helper to turn URLs in text into clickable links.
+ */
+function formatDescription(text: string) {
+  if (!text) return null;
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  return text.split(urlRegex).map((part, i) => {
+    if (part.match(urlRegex)) {
+      return (
+        <a 
+          key={i} 
+          href={part} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="text-primary font-bold hover:underline break-all"
+        >
+          {part}
+        </a>
+      );
+    }
+    return part;
+  });
+}
+
+/**
  * Dynamic Service Details Page.
  * Content is fully controlled from Firestore 'services' collection.
  */
@@ -110,7 +134,7 @@ export default function ServiceDetails() {
               </h2>
               <div className="p-6 bg-muted/30 rounded-2xl border border-dashed text-muted-foreground leading-relaxed">
                 {service?.description ? (
-                  <p className="whitespace-pre-wrap">{service.description}</p>
+                  <div className="whitespace-pre-wrap">{formatDescription(service.description)}</div>
                 ) : (
                   <p>{service?.name} ke liye official notification yahan pradan ki gayi hai. Neeche diye gaye button par click karke official portal par jayein.</p>
                 )}
