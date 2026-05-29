@@ -8,12 +8,12 @@ import Link from "next/link";
 
 export default function Home() {
   const calendarItems = [
-    { title: "SSC CGL 2024", date: "Sept-Oct 2024", icon: <Briefcase className="w-5 h-5" />, status: "Upcoming", url: "https://ssc.gov.in" },
-    { title: "UPSC Prelims", date: "May 2024", icon: <Award className="w-5 h-5" />, status: "Concluded", url: "https://upsc.gov.in" },
-    { title: "IBPS PO", date: "Oct 2024", icon: <Bell className="w-5 h-5" />, status: "Active", url: "https://ibps.in" },
-    { title: "CTET 2024", date: "July 2024", icon: <Calendar className="w-5 h-5" />, status: "Concluded", url: "https://ctet.nic.in" },
-    { title: "RRB NTPC", date: "TBA 2024", icon: <Briefcase className="w-5 h-5" />, status: "Awaited", url: "https://indianrailways.gov.in" },
-    { title: "JEE Advanced", date: "June 2024", icon: <Award className="w-5 h-5" />, status: "Concluded", url: "https://jeeadv.ac.in" },
+    { title: "SSC CGL 2026", date: "June-July 2026", icon: <Briefcase className="w-5 h-5" />, status: "Upcoming", url: "https://ssc.gov.in" },
+    { title: "UPSC Prelims 2026", date: "May 2026", icon: <Award className="w-5 h-5" />, status: "Upcoming", url: "https://upsc.gov.in" },
+    { title: "IBPS PO 2026", date: "Oct 2026", icon: <Bell className="w-5 h-5" />, status: "Active", url: "https://ibps.in" },
+    { title: "CTET Jan 2026", date: "January 2026", icon: <Calendar className="w-5 h-5" />, status: "Active", url: "https://ctet.nic.in" },
+    { title: "RRB NTPC 2026", date: "TBA 2026", icon: <Briefcase className="w-5 h-5" />, status: "Awaited", url: "https://indianrailways.gov.in" },
+    { title: "JEE Advanced 2026", date: "June 2026", icon: <Award className="w-5 h-5" />, status: "Upcoming", url: "https://jeeadv.ac.in" },
   ];
 
   return (
@@ -61,9 +61,9 @@ export default function Home() {
 
           <section id="calendar" className="space-y-8 py-4">
             <div className="text-center space-y-4 px-4">
-              <h2 className="text-2xl md:text-5xl font-bold tracking-tight">Sarkari Exam Calendar</h2>
+              <h2 className="text-2xl md:text-5xl font-bold tracking-tight">Sarkari Exam Calendar 2026</h2>
               <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
-                Stay ahead with the latest upcoming exam schedules and notification dates.
+                Stay ahead with the latest upcoming exam schedules and notification dates for the 2026 session.
               </p>
             </div>
             
