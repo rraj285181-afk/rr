@@ -3,7 +3,7 @@
 /**
  * @fileOverview Advanced Smart Bharat Concierge AI Flow.
  * Features: Firestore Tool Integration for real-time link lookup.
- * Optimized for Genkit 1.x
+ * Optimized for Genkit 1.x with enhanced error resilience.
  */
 
 import { ai } from '@/ai/genkit';
@@ -79,19 +79,26 @@ const conciergePrompt = ai.definePrompt({
   input: { schema: ConciergeInputSchema },
   output: { schema: ConciergeOutputSchema },
   tools: [searchServicesTool],
+  config: {
+    safetySettings: [
+      { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_ONLY_HIGH' },
+      { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_ONLY_HIGH' },
+    ],
+  },
   prompt: `You are the Advanced Smart Bharat Concierge for JobIndians.com.
 Your goal is to help Indian citizens find official government job notifications, exam results, and admit cards.
 
 Voice & Tone:
 - Professional "Hinglish" (Mix of Hindi and English).
 - Warm, helpful, and encouraging.
+- Use emojis like 📢, 🚀, ✅ sparingly.
 - Always provide internal links to our portal (/services/ID) if available via searchServices tool.
 
 Instructions:
 1. Greet the user warmly in Hinglish if it's the start of conversation.
 2. If the user asks for a specific exam (like SSC, UPSC, Railway), use the 'searchServices' tool.
 3. If searchServices returns links, display them as a list and mention they are verified.
-4. If no results are found, suggest official websites like ssc.gov.in, upsc.gov.in or sarkariresult.com as secondary sources.
+4. If no results are found, suggest official websites like ssc.gov.in or upsc.gov.in.
 5. Keep the conversation focused on Indian jobs and exams.
 
 History:
@@ -104,21 +111,18 @@ User Query: {{{message}}}`,
 
 export async function smartBharatConcierge(input: z.infer<typeof ConciergeInputSchema>) {
   try {
-    const { output } = await conciergePrompt(input);
+    const response = await conciergePrompt(input);
     
-    if (!output) {
-      return {
-        response: "Maaf kijiye, main abhi apki puri tarah madad nahi kar paa raha hoon. Kripya thodi der baad koshish karein ya directory manually check karein.",
-        suggestions: ["Latest Jobs", "Check Results"]
-      };
+    if (!response || !response.output) {
+      throw new Error("No output from AI model");
     }
     
-    return output;
+    return response.output;
   } catch (error) {
     console.error("AI Flow Execution Error:", error);
     return {
-      response: "Kshama karein, server se connect karne mein samasya aa rahi hai. Aap hamari official directory use kar sakte hain.",
-      suggestions: ["SSC Results", "UPSC 2026", "Latest Jobs"]
+      response: "Kshama karein, abhi connection mein kuch dikkat aa rahi hai. Aap manually directory check kar sakte hain ya page refresh karke dobara koshish karein.",
+      suggestions: ["SSC 2026 Results", "UPSC Notifications", "Latest Jobs"]
     };
   }
 }
