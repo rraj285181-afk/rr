@@ -15,7 +15,10 @@ import {
   Briefcase,
   AlertCircle,
   Info,
-  MapPin
+  MapPin,
+  CheckCircle2,
+  FileText,
+  AlertTriangle
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -44,10 +47,6 @@ function formatDescription(text: string) {
   });
 }
 
-/**
- * Dynamic Service Details Page.
- * Content is fully controlled from Firestore 'services' collection.
- */
 export default function ServiceDetails() {
   const { id } = useParams();
   const db = useFirestore();
@@ -64,7 +63,7 @@ export default function ServiceDetails() {
       <div className="min-h-screen flex items-center justify-center bg-background p-4">
         <div className="flex flex-col items-center gap-4 text-muted-foreground">
           <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
-          <p className="font-bold uppercase tracking-widest text-[10px]">Loading Official Data...</p>
+          <p className="font-bold uppercase tracking-widest text-[10px]">Verifying Content Quality...</p>
         </div>
       </div>
     );
@@ -74,10 +73,10 @@ export default function ServiceDetails() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4 text-center">
         <AlertCircle className="w-16 h-16 text-destructive mb-4" />
-        <h1 className="text-2xl font-bold mb-2">Link Not Found</h1>
-        <p className="text-muted-foreground mb-6">Ye link abhi uplabd nahi hai ya hta diya gaya hai.</p>
+        <h1 className="text-2xl font-bold mb-2">Content Not Found</h1>
+        <p className="text-muted-foreground mb-6">Ye page abhi uplabd nahi hai ya hta diya gaya hai.</p>
         <Button asChild>
-          <Link href="/">Back to Home</Link>
+          <Link href="/">Return to Directory</Link>
         </Button>
       </div>
     );
@@ -104,14 +103,12 @@ export default function ServiceDetails() {
       </nav>
 
       <main className="max-w-4xl mx-auto px-4 pt-8 md:pt-12 space-y-8">
-        <AdBanner adSlot="3693488562" variant="horizontal" className="my-0" />
-
         <div className="bg-card border shadow-2xl rounded-3xl overflow-hidden">
           <div className="bg-primary p-8 md:p-12 text-primary-foreground relative overflow-hidden">
             <ShieldCheck className="absolute right-[-20px] top-[-20px] w-48 h-48 opacity-10 rotate-12" />
             <div className="relative z-10 space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 rounded-full text-[10px] font-bold uppercase tracking-widest">
-                Verified Link Detail
+                Verified Career Intelligence
               </div>
               <h1 className="text-3xl md:text-5xl font-headline font-bold leading-tight">
                 {service?.name}
@@ -129,7 +126,7 @@ export default function ServiceDetails() {
             </div>
           </div>
 
-          <div className="p-8 md:p-12 space-y-10">
+          <div className="p-8 md:p-12 space-y-12">
             {/* Last Date Highlight */}
             {service?.lastDate && service.lastDate.trim() !== "" && (
               <div className="p-6 bg-red-500/5 rounded-2xl border border-red-500/10 flex items-center gap-5 shadow-sm">
@@ -137,23 +134,57 @@ export default function ServiceDetails() {
                   <Clock className="w-8 h-8" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-red-600/70 mb-1">Important: Last Date / Status</p>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-red-600/70 mb-1">Official Submission Deadline</p>
                   <p className="font-black text-xl md:text-2xl text-red-600">{service?.lastDate}</p>
                 </div>
               </div>
             )}
 
+            {/* Official Description */}
             <section className="space-y-4">
               <h2 className="text-xl font-bold flex items-center gap-2">
                 <Info className="w-5 h-5 text-primary" />
-                Latest Notification / Update
+                Detailed Notification Summary
               </h2>
               <div className="p-6 bg-muted/30 rounded-2xl border border-dashed text-muted-foreground leading-relaxed">
                 {service?.description ? (
                   <div className="whitespace-pre-wrap">{formatDescription(service.description)}</div>
                 ) : (
-                  <p>{service?.name} ke liye official notification yahan pradan ki gayi hai. Neeche diye gaye button par click karke official portal par jayein.</p>
+                  <p>Is notification ke baare mein vistarit jankari official document mein uplabd hai. Hum koshish karte hain ki har link verified ho taaki aap sahi source tak pahunch sakein.</p>
                 )}
+              </div>
+            </section>
+
+            <AdBanner adSlot="3693488562" variant="horizontal" className="my-0" />
+
+            {/* Added Value Content: Step-by-Step Guide (Permanent Content) */}
+            <section className="space-y-6">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-primary/10 rounded-lg text-primary">
+                  <FileText className="w-5 h-5" />
+                </div>
+                <h2 className="text-xl font-bold">Important Instructions for Candidates</h2>
+              </div>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="p-5 bg-card border rounded-2xl space-y-3">
+                  <h4 className="font-bold text-sm text-primary flex items-center gap-2 uppercase tracking-wide">
+                    <CheckCircle2 className="w-4 h-4" /> How to Apply / Check
+                  </h4>
+                  <ul className="text-xs text-muted-foreground space-y-2 leading-relaxed">
+                    <li>1. Click on the "Visit Official Website" button below.</li>
+                    <li>2. Look for the "Latest Announcements" or "Notifications" section.</li>
+                    <li>3. Find the reference number {service?.name} in the list.</li>
+                    <li>4. Keep your Registration Number and DOB ready for access.</li>
+                  </ul>
+                </div>
+                <div className="p-5 bg-orange-500/5 border border-orange-500/10 rounded-2xl space-y-3">
+                  <h4 className="font-bold text-sm text-orange-600 flex items-center gap-2 uppercase tracking-wide">
+                    <AlertTriangle className="w-4 h-4" /> Safety Warning
+                  </h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Kabhi bhi kisi bhi third-party site par apna payment ya sensitive information share na karein. Hamesha check karein ki website ka URL **.gov.in** ya **.nic.in** par khatam ho raha hai.
+                  </p>
+                </div>
               </div>
             </section>
 
@@ -169,18 +200,16 @@ export default function ServiceDetails() {
                   rel="noopener noreferrer"
                   className="flex items-center gap-3"
                 >
-                  Visit Official Website
+                  Go to Official Portal
                   <ExternalLink className="w-5 h-5" />
                 </a>
               </Button>
               <p className="text-[10px] text-muted-foreground text-center max-w-sm italic">
-                Note: Aap verified official source par ja rahe hain. Kisi bhi third-party details par bharosa na karein.
+                Verified Source Protection: Redirecting you safely to the authorized government recruitment board.
               </p>
             </div>
           </div>
         </div>
-
-        <AdBanner adSlot="3693488562" variant="horizontal" className="mt-8" />
       </main>
 
       <Concierge />
