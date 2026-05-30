@@ -192,26 +192,26 @@ export default function ServiceDetails() {
               </div>
             </section>
 
-            {/* Dynamic Info Grid with Divider and Left-Alignment */}
+            {/* Dynamic Info Grid with Clear Dividers and Strict Left-Alignment */}
             {infoBlocks.length > 0 && (
               <div className={cn(
-                "grid gap-px bg-primary/20 border border-primary/20 rounded-2xl overflow-hidden shadow-sm",
+                "grid gap-[1px] bg-border border border-border rounded-2xl overflow-hidden shadow-sm",
                 infoBlocks.length > 1 ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"
               )}>
                 {infoBlocks.map((block) => (
                   <div key={block.id} className="bg-card flex flex-col min-h-[140px]">
-                    <div className="bg-primary/5 p-4 flex items-center justify-start gap-2 border-b border-primary/10">
+                    <div className="bg-primary/5 p-5 flex items-center justify-start gap-2 border-b border-border/50">
                       <block.icon className="w-4 h-4 text-primary shrink-0" />
                       <h4 className="text-[12px] font-black uppercase tracking-[0.1em] text-primary">{block.label}</h4>
                     </div>
-                    <div className="p-6 flex-1 flex flex-col items-start justify-center">
+                    <div className="p-6 flex-1 flex flex-col items-start justify-center text-left">
                       {block.isCounter ? (
-                        <div className="flex flex-col items-start">
-                          <span className="text-4xl md:text-5xl font-black text-primary tracking-tighter">{block.value}</span>
+                        <div className="flex flex-col items-start text-left w-full">
+                          <span className="text-4xl md:text-5xl font-black text-primary tracking-tighter leading-none">{block.value}</span>
                           <span className="text-[10px] uppercase font-black text-muted-foreground opacity-40 mt-1 tracking-widest">Vacancies</span>
                         </div>
                       ) : (
-                        <div className="text-sm md:text-base font-bold text-foreground whitespace-pre-wrap leading-relaxed text-left">
+                        <div className="text-sm md:text-base font-bold text-foreground whitespace-pre-wrap leading-relaxed text-left w-full">
                           {block.value}
                         </div>
                       )}
