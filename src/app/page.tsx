@@ -9,12 +9,54 @@ import Link from "next/link";
 
 export default function Home() {
   const calendarItems = [
-    { title: "SSC CGL 2026", date: "June-July 2026", icon: <Briefcase className="w-5 h-5" />, status: "Upcoming", url: "https://ssc.gov.in" },
-    { title: "UPSC Prelims 2026", date: "May 2026", icon: <Award className="w-5 h-5" />, status: "Upcoming", url: "https://upsc.gov.in" },
-    { title: "IBPS PO 2026", date: "Oct 2026", icon: <Bell className="w-5 h-5" />, status: "Active", url: "https://ibps.in" },
-    { title: "CTET Jan 2026", date: "January 2026", icon: <Calendar className="w-5 h-5" />, status: "Active", url: "https://ctet.nic.in" },
-    { title: "RRB NTPC 2026", date: "TBA 2026", icon: <Briefcase className="w-5 h-5" />, status: "Awaited", url: "https://indianrailways.gov.in" },
-    { title: "JEE Advanced 2026", date: "June 2026", icon: <Award className="w-5 h-5" />, status: "Upcoming", url: "https://jeeadv.ac.in" },
+    { 
+      title: "SSC CGL 2026", 
+      date: "June-July 2026", 
+      icon: <Briefcase className="w-5 h-5" />, 
+      status: "Upcoming", 
+      url: "https://ssc.gov.in",
+      description: "Combined Graduate Level Examination for various Group B and C administrative posts in central ministries."
+    },
+    { 
+      title: "UPSC Prelims 2026", 
+      date: "May 2026", 
+      icon: <Award className="w-5 h-5" />, 
+      status: "Upcoming", 
+      url: "https://upsc.gov.in",
+      description: "Civil Services Preliminary Examination for recruitment to prestigious services like IAS, IPS, and IFS."
+    },
+    { 
+      title: "IBPS PO 2026", 
+      date: "Oct 2026", 
+      icon: <Bell className="w-5 h-5" />, 
+      status: "Active", 
+      url: "https://ibps.in",
+      description: "Probationary Officers recruitment drive for participating public sector banks across India."
+    },
+    { 
+      title: "CTET Jan 2026", 
+      date: "January 2026", 
+      icon: <Calendar className="w-5 h-5" />, 
+      status: "Active", 
+      url: "https://ctet.nic.in",
+      description: "Central Teacher Eligibility Test for candidates aspiring for teaching positions in central government schools."
+    },
+    { 
+      title: "RRB NTPC 2026", 
+      date: "TBA 2026", 
+      icon: <Briefcase className="w-5 h-5" />, 
+      status: "Awaited", 
+      url: "https://indianrailways.gov.in",
+      description: "Non-Technical Popular Categories recruitment for various station and commercial roles in Indian Railways."
+    },
+    { 
+      title: "JEE Advanced 2026", 
+      date: "June 2026", 
+      icon: <Award className="w-5 h-5" />, 
+      status: "Upcoming", 
+      url: "https://jeeadv.ac.in",
+      description: "Joint Entrance Examination for admission to undergraduate courses in Indian Institutes of Technology (IITs)."
+    },
   ];
 
   return (
@@ -76,7 +118,7 @@ export default function Home() {
                   href={item.url} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="group bg-card border rounded-2xl p-5 space-y-4 hover:shadow-md hover:border-primary/50 transition-all cursor-pointer relative"
+                  className="group bg-card border rounded-2xl p-5 space-y-4 hover:shadow-md hover:border-primary/50 transition-all cursor-pointer relative flex flex-col h-full"
                 >
                   <div className="flex items-center justify-between">
                     <div className="p-2 bg-primary/10 rounded-lg text-primary group-hover:scale-110 transition-transform">
@@ -93,9 +135,14 @@ export default function Home() {
                       <ExternalLink className="w-3 h-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
                   </div>
-                  <div>
-                    <h4 className="font-bold text-base md:text-lg group-hover:text-primary transition-colors">{item.title}</h4>
-                    <p className="text-[10px] md:text-sm text-muted-foreground">Expected: {item.date}</p>
+                  <div className="flex-1 space-y-2">
+                    <div>
+                      <h4 className="font-bold text-base md:text-lg group-hover:text-primary transition-colors">{item.title}</h4>
+                      <p className="text-[10px] md:text-sm text-primary/80 font-semibold italic">Expected: {item.date}</p>
+                    </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      {item.description}
+                    </p>
                   </div>
                 </a>
               ))}
