@@ -37,7 +37,7 @@ export default function AboutUs() {
                   <h2 className="text-2xl font-bold">Our Core Mission</h2>
                 </div>
                 <p className="text-muted-foreground leading-relaxed">
-                  JobIndians ka ek hi uddeshya hai: Har aspirant tak sahi aur verified jankari pahunchana. Digital Bharat ke is daur mein, galat links aur fake news se bachakar, hum aapko seedha official source se jodte hain. Hum verify karte hain har SSC, UPSC, aur State Board link ko taaki aapka samay aur bharosa dono safe rahein.
+                  JobIndians ka ek hi uddeshya hai: Har aspirant tak sahi jankari pahunchana. Digital Bharat ke is daur mein, galat links aur fake news se bachakar, hum aapko seedha official source se jodte hain. Hum check karte hain har SSC, UPSC, aur State Board link ko taaki aapka samay aur bharosa dono safe rahein.
                 </p>
               </div>
               <div className="space-y-4">
@@ -64,8 +64,8 @@ export default function AboutUs() {
               </div>
               <div className="grid sm:grid-cols-2 gap-6">
                 {[
-                  { title: "Verified Ecosystem", desc: "Hum sirf .gov.in aur official institutional domains ko hi index karte hain." },
-                  { title: "Zero Data Harvesting", desc: "Aapka personal data humare liye pavitra hai. Hum bina login ke information provide karte hain." },
+                  { title: "Official Ecosystem", desc: "Hum sirf .gov.in aur official institutional domains ko hi index karte hain." },
+                  { title: "Zero Data Harvesting", desc: "Aapka personal data humare liye pavitra hai. Hum bina login ke information pradan karte hain." },
                   { title: "Real-time AI Concierge", desc: "Hamara advanced AI aapke queries ka turant Hinglish mein jawab deta hai." },
                   { title: "Mobile Precision", desc: "Hamara portal har screen par tezi se load hota hai, taaki aap kahin bhi update rahein." }
                 ].map((item, i) => (

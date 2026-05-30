@@ -63,7 +63,7 @@ export default function ServiceDetails() {
       <div className="min-h-screen flex items-center justify-center bg-background p-4">
         <div className="flex flex-col items-center gap-4 text-muted-foreground">
           <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
-          <p className="font-bold uppercase tracking-widest text-[10px]">Verifying Content Quality...</p>
+          <p className="font-bold uppercase tracking-widest text-[10px]">Loading Content...</p>
         </div>
       </div>
     );
@@ -108,7 +108,7 @@ export default function ServiceDetails() {
             <ShieldCheck className="absolute right-[-20px] top-[-20px] w-48 h-48 opacity-10 rotate-12" />
             <div className="relative z-10 space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 rounded-full text-[10px] font-bold uppercase tracking-widest">
-                Verified Career Intelligence
+                Career Intelligence
               </div>
               <h1 className="text-3xl md:text-5xl font-headline font-bold leading-tight">
                 {service?.name}
@@ -150,7 +150,7 @@ export default function ServiceDetails() {
                 {service?.description ? (
                   <div className="whitespace-pre-wrap">{formatDescription(service.description)}</div>
                 ) : (
-                  <p>Is notification ke baare mein vistarit jankari official document mein uplabd hai. Hum koshish karte hain ki har link verified ho taaki aap sahi source tak pahunch sakein.</p>
+                  <p>Is notification ke baare mein vistarit jankari official document mein uplabd hai. Hum koshish karte hain ki har link sahi ho taaki aap sahi source tak pahunch sakein.</p>
                 )}
               </div>
             </section>
@@ -205,7 +205,7 @@ export default function ServiceDetails() {
                 </a>
               </Button>
               <p className="text-[10px] text-muted-foreground text-center max-w-sm italic">
-                Verified Source Protection: Redirecting you safely to the authorized government recruitment board.
+                Redirecting you safely to the authorized government recruitment board.
               </p>
             </div>
           </div>

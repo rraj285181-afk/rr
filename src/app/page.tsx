@@ -48,7 +48,7 @@ export default function Home() {
             <div className="text-center space-y-3">
               <h2 className="text-2xl md:text-5xl font-bold tracking-tight px-2">Official Service Directory</h2>
               <p className="text-xs md:text-base text-muted-foreground max-w-2xl mx-auto px-6">
-                Direct access to Board Results, Admit Cards, and Latest Recruitment notifications from verified official sources.
+                Direct access to Board Results, Admit Cards, and Latest Recruitment notifications from official sources.
               </p>
             </div>
 
@@ -117,7 +117,7 @@ export default function Home() {
               <span className="text-xl font-bold text-primary tracking-tight">JobIndians</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto lg:mx-0">
-              Verified access to official Indian government recruitment notifications, exam results, and citizen services.
+              Access to official Indian government recruitment notifications, exam results, and citizen services.
             </p>
           </div>
 
@@ -150,7 +150,7 @@ export default function Home() {
             © {new Date().getFullYear()} JobIndians Portal
           </p>
           <p className="text-[8px] md:text-[10px] text-muted-foreground/60 uppercase tracking-widest italic">
-            Official Citizen Notification Service • All Rights Reserved
+            Citizen Notification Service • All Rights Reserved
           </p>
         </div>
       </footer>
