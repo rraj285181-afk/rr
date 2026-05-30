@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useParams } from "next/navigation";
@@ -138,7 +137,7 @@ export default function ServiceDetails() {
                   <Clock className="w-8 h-8" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-red-600/70 mb-1">Official Submission Deadline</p>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-red-600/70 mb-1">Submission Deadline</p>
                   <p className="font-black text-xl md:text-2xl text-red-600">{service?.lastDate}</p>
                 </div>
               </div>
@@ -150,7 +149,7 @@ export default function ServiceDetails() {
                 <Info className="w-5 h-5 text-primary" />
                 Notification Summary
               </h2>
-              <div className="p-6 bg-muted/30 rounded-2xl border border-dashed text-muted-foreground leading-relaxed">
+              <div className="p-6 bg-muted/30 rounded-2xl border border-dashed text-muted-foreground leading-relaxed text-sm md:text-base">
                 {service?.description ? (
                   <div className="whitespace-pre-wrap">{formatDescription(service.description)}</div>
                 ) : (
@@ -159,48 +158,48 @@ export default function ServiceDetails() {
               </div>
             </section>
 
-            {/* Structured Info Grid (Like the user image) */}
+            {/* Structured Info Grid (Controlled by Firebase) */}
             {(service?.importantDates || service?.applicationFee || service?.ageLimit || service?.totalPosts) && (
               <div className="grid grid-cols-1 md:grid-cols-2 border border-primary/20 rounded-2xl overflow-hidden shadow-sm bg-card">
                 {/* Important Dates */}
-                <div className="border-b md:border-r border-primary/10">
-                  <div className="bg-primary/5 p-3 flex items-center justify-center gap-2 border-b border-primary/10">
+                <div className="border-b md:border-r border-primary/10 flex flex-col">
+                  <div className="bg-primary/5 p-3.5 flex items-center justify-center gap-2 border-b border-primary/10">
                     <CalendarDays className="w-4 h-4 text-primary" />
-                    <h4 className="text-[11px] font-black uppercase tracking-widest text-primary">Important Dates</h4>
+                    <h4 className="text-[12px] font-black uppercase tracking-[0.1em] text-primary">Important Dates</h4>
                   </div>
-                  <div className="p-5 text-xs text-muted-foreground whitespace-pre-wrap leading-relaxed italic">
+                  <div className="p-6 flex-1 text-sm md:text-base font-medium text-foreground whitespace-pre-wrap leading-relaxed">
                     {service.importantDates || "Check official notification"}
                   </div>
                 </div>
                 {/* Application Fee */}
-                <div className="border-b border-primary/10">
-                  <div className="bg-primary/5 p-3 flex items-center justify-center gap-2 border-b border-primary/10">
+                <div className="border-b border-primary/10 flex flex-col">
+                  <div className="bg-primary/5 p-3.5 flex items-center justify-center gap-2 border-b border-primary/10">
                     <CreditCard className="w-4 h-4 text-primary" />
-                    <h4 className="text-[11px] font-black uppercase tracking-widest text-primary">Application Fee</h4>
+                    <h4 className="text-[12px] font-black uppercase tracking-[0.1em] text-primary">Application Fee</h4>
                   </div>
-                  <div className="p-5 text-xs text-muted-foreground whitespace-pre-wrap leading-relaxed italic">
+                  <div className="p-6 flex-1 text-sm md:text-base font-medium text-foreground whitespace-pre-wrap leading-relaxed">
                     {service.applicationFee || "As per official rules"}
                   </div>
                 </div>
                 {/* Age Limit */}
-                <div className="border-b md:border-b-0 md:border-r border-primary/10">
-                  <div className="bg-primary/5 p-3 flex items-center justify-center gap-2 border-b border-primary/10">
+                <div className="border-b md:border-b-0 md:border-r border-primary/10 flex flex-col">
+                  <div className="bg-primary/5 p-3.5 flex items-center justify-center gap-2 border-b border-primary/10">
                     <UserRound className="w-4 h-4 text-primary" />
-                    <h4 className="text-[11px] font-black uppercase tracking-widest text-primary">Age Limit</h4>
+                    <h4 className="text-[12px] font-black uppercase tracking-[0.1em] text-primary">Age Limit</h4>
                   </div>
-                  <div className="p-5 text-xs text-muted-foreground whitespace-pre-wrap leading-relaxed italic">
+                  <div className="p-6 flex-1 text-sm md:text-base font-medium text-foreground whitespace-pre-wrap leading-relaxed">
                     {service.ageLimit || "Refer to detailed notification"}
                   </div>
                 </div>
                 {/* Total Post */}
-                <div>
-                  <div className="bg-primary/5 p-3 flex items-center justify-center gap-2 border-b border-primary/10">
+                <div className="flex flex-col">
+                  <div className="bg-primary/5 p-3.5 flex items-center justify-center gap-2 border-b border-primary/10">
                     <FileDigit className="w-4 h-4 text-primary" />
-                    <h4 className="text-[11px] font-black uppercase tracking-widest text-primary">Total Posts</h4>
+                    <h4 className="text-[12px] font-black uppercase tracking-[0.1em] text-primary">Total Posts</h4>
                   </div>
-                  <div className="p-5 flex flex-col items-center justify-center min-h-[80px]">
-                    <span className="text-3xl font-black text-primary">{service.totalPosts || "—"}</span>
-                    <span className="text-[9px] uppercase font-bold text-muted-foreground opacity-50">Vacancies</span>
+                  <div className="p-8 flex-1 flex flex-col items-center justify-center min-h-[120px]">
+                    <span className="text-4xl md:text-5xl font-black text-primary tracking-tighter">{service.totalPosts || "—"}</span>
+                    <span className="text-[10px] uppercase font-black text-muted-foreground opacity-40 mt-1 tracking-widest">Vacancies</span>
                   </div>
                 </div>
               </div>
@@ -208,26 +207,25 @@ export default function ServiceDetails() {
 
             <AdBanner adSlot="3693488562" variant="horizontal" className="my-0" />
 
-            {/* Guidance & Warnings */}
+            {/* Safety Guidance */}
             <section className="space-y-6">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="p-5 bg-card border rounded-2xl space-y-3">
+                <div className="p-6 bg-card border rounded-2xl space-y-4">
                   <h4 className="font-bold text-sm text-primary flex items-center gap-2 uppercase tracking-wide">
-                    <CheckCircle2 className="w-4 h-4" /> Guidance
+                    <CheckCircle2 className="w-4 h-4" /> Step-by-Step
                   </h4>
-                  <ul className="text-xs text-muted-foreground space-y-2 leading-relaxed">
-                    <li>1. Click on the "Visit Official Website" button below.</li>
-                    <li>2. Look for the "Latest Announcements" or "Notifications" section.</li>
-                    <li>3. Find the reference number {service?.name} in the list.</li>
-                    <li>4. Keep your Registration Number and DOB ready for access.</li>
+                  <ul className="text-xs md:text-sm text-muted-foreground space-y-3 leading-relaxed">
+                    <li className="flex gap-2"><span>1.</span> Click on the "Visit Official Website" button.</li>
+                    <li className="flex gap-2"><span>2.</span> Search for reference: {service?.name}.</li>
+                    <li className="flex gap-2"><span>3.</span> Keep documents ready for official submission.</li>
                   </ul>
                 </div>
-                <div className="p-5 bg-orange-500/5 border border-orange-500/10 rounded-2xl space-y-3">
+                <div className="p-6 bg-orange-500/5 border border-orange-500/10 rounded-2xl space-y-4">
                   <h4 className="font-bold text-sm text-orange-600 flex items-center gap-2 uppercase tracking-wide">
-                    <AlertTriangle className="w-4 h-4" /> Safety Warning
+                    <AlertTriangle className="w-4 h-4" /> Safety Info
                   </h4>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    Hamesha check karein ki website ka URL **.gov.in** ya **.nic.in** par khatam ho raha hai. Kisi bhi anjan third-party links par apna sensitive data share na karein.
+                  <p className="text-xs md:text-sm text-muted-foreground leading-relaxed italic">
+                    Always confirm the site URL ends in **.gov.in** or **.nic.in**. Avoid sharing sensitive personal data on unverified third-party platforms.
                   </p>
                 </div>
               </div>
