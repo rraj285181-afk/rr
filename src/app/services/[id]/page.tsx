@@ -192,7 +192,7 @@ export default function ServiceDetails() {
               </div>
             </section>
 
-            {/* Dynamic Info Grid (Adjusts based on count) */}
+            {/* Dynamic Info Grid with Divider and Left-Alignment */}
             {infoBlocks.length > 0 && (
               <div className={cn(
                 "grid gap-px bg-primary/20 border border-primary/20 rounded-2xl overflow-hidden shadow-sm",
@@ -200,18 +200,18 @@ export default function ServiceDetails() {
               )}>
                 {infoBlocks.map((block) => (
                   <div key={block.id} className="bg-card flex flex-col min-h-[140px]">
-                    <div className="bg-primary/5 p-3.5 flex items-center justify-center gap-2 border-b border-primary/10">
-                      <block.icon className="w-4 h-4 text-primary" />
+                    <div className="bg-primary/5 p-4 flex items-center justify-start gap-2 border-b border-primary/10">
+                      <block.icon className="w-4 h-4 text-primary shrink-0" />
                       <h4 className="text-[12px] font-black uppercase tracking-[0.1em] text-primary">{block.label}</h4>
                     </div>
-                    <div className="p-6 flex-1 flex flex-col items-center justify-center text-center">
+                    <div className="p-6 flex-1 flex flex-col items-start justify-center">
                       {block.isCounter ? (
-                        <>
+                        <div className="flex flex-col items-start">
                           <span className="text-4xl md:text-5xl font-black text-primary tracking-tighter">{block.value}</span>
                           <span className="text-[10px] uppercase font-black text-muted-foreground opacity-40 mt-1 tracking-widest">Vacancies</span>
-                        </>
+                        </div>
                       ) : (
-                        <div className="text-sm md:text-base font-bold text-foreground whitespace-pre-wrap leading-relaxed">
+                        <div className="text-sm md:text-base font-bold text-foreground whitespace-pre-wrap leading-relaxed text-left">
                           {block.value}
                         </div>
                       )}
