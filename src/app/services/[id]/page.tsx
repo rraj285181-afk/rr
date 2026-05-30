@@ -61,6 +61,39 @@ export default function ServiceDetails() {
 
   const { data: service, loading, exists } = useDoc<IndianService>(serviceRef);
 
+  // Filter populated fields for the information grid
+  const infoBlocks = useMemoFirebase(() => {
+    if (!service) return [];
+    const blocks = [
+      { 
+        id: 'importantDates',
+        label: 'Important Dates', 
+        icon: CalendarDays, 
+        value: service.importantDates 
+      },
+      { 
+        id: 'applicationFee',
+        label: 'Application Fee', 
+        icon: CreditCard, 
+        value: service.applicationFee 
+      },
+      { 
+        id: 'ageLimit',
+        label: 'Age Limit', 
+        icon: UserRound, 
+        value: service.ageLimit 
+      },
+      { 
+        id: 'totalPosts',
+        label: 'Total Posts', 
+        icon: FileDigit, 
+        value: service.totalPosts,
+        isCounter: true
+      },
+    ];
+    return blocks.filter(b => b.value && b.value.trim() !== "");
+  }, [service]);
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background p-4">
@@ -158,50 +191,29 @@ export default function ServiceDetails() {
               </div>
             </section>
 
-            {/* Structured Info Grid (Controlled by Firebase) */}
-            {(service?.importantDates || service?.applicationFee || service?.ageLimit || service?.totalPosts) && (
-              <div className="grid grid-cols-1 md:grid-cols-2 border border-primary/20 rounded-2xl overflow-hidden shadow-sm bg-card">
-                {/* Important Dates */}
-                <div className="border-b md:border-r border-primary/10 flex flex-col">
-                  <div className="bg-primary/5 p-3.5 flex items-center justify-center gap-2 border-b border-primary/10">
-                    <CalendarDays className="w-4 h-4 text-primary" />
-                    <h4 className="text-[12px] font-black uppercase tracking-[0.1em] text-primary">Important Dates</h4>
+            {/* Dynamic Info Grid (Only shows populated fields) */}
+            {infoBlocks.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-primary/20 border border-primary/20 rounded-2xl overflow-hidden shadow-sm bg-primary/20">
+                {infoBlocks.map((block) => (
+                  <div key={block.id} className="bg-card flex flex-col min-h-[140px]">
+                    <div className="bg-primary/5 p-3.5 flex items-center justify-center gap-2 border-b border-primary/10">
+                      <block.icon className="w-4 h-4 text-primary" />
+                      <h4 className="text-[12px] font-black uppercase tracking-[0.1em] text-primary">{block.label}</h4>
+                    </div>
+                    <div className="p-6 flex-1 flex flex-col items-center justify-center text-center">
+                      {block.isCounter ? (
+                        <>
+                          <span className="text-4xl md:text-5xl font-black text-primary tracking-tighter">{block.value}</span>
+                          <span className="text-[10px] uppercase font-black text-muted-foreground opacity-40 mt-1 tracking-widest">Vacancies</span>
+                        </>
+                      ) : (
+                        <div className="text-sm md:text-base font-bold text-foreground whitespace-pre-wrap leading-relaxed">
+                          {block.value}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <div className="p-6 flex-1 text-sm md:text-base font-medium text-foreground whitespace-pre-wrap leading-relaxed">
-                    {service.importantDates || "Check official notification"}
-                  </div>
-                </div>
-                {/* Application Fee */}
-                <div className="border-b border-primary/10 flex flex-col">
-                  <div className="bg-primary/5 p-3.5 flex items-center justify-center gap-2 border-b border-primary/10">
-                    <CreditCard className="w-4 h-4 text-primary" />
-                    <h4 className="text-[12px] font-black uppercase tracking-[0.1em] text-primary">Application Fee</h4>
-                  </div>
-                  <div className="p-6 flex-1 text-sm md:text-base font-medium text-foreground whitespace-pre-wrap leading-relaxed">
-                    {service.applicationFee || "As per official rules"}
-                  </div>
-                </div>
-                {/* Age Limit */}
-                <div className="border-b md:border-b-0 md:border-r border-primary/10 flex flex-col">
-                  <div className="bg-primary/5 p-3.5 flex items-center justify-center gap-2 border-b border-primary/10">
-                    <UserRound className="w-4 h-4 text-primary" />
-                    <h4 className="text-[12px] font-black uppercase tracking-[0.1em] text-primary">Age Limit</h4>
-                  </div>
-                  <div className="p-6 flex-1 text-sm md:text-base font-medium text-foreground whitespace-pre-wrap leading-relaxed">
-                    {service.ageLimit || "Refer to detailed notification"}
-                  </div>
-                </div>
-                {/* Total Post */}
-                <div className="flex flex-col">
-                  <div className="bg-primary/5 p-3.5 flex items-center justify-center gap-2 border-b border-primary/10">
-                    <FileDigit className="w-4 h-4 text-primary" />
-                    <h4 className="text-[12px] font-black uppercase tracking-[0.1em] text-primary">Total Posts</h4>
-                  </div>
-                  <div className="p-8 flex-1 flex flex-col items-center justify-center min-h-[120px]">
-                    <span className="text-4xl md:text-5xl font-black text-primary tracking-tighter">{service.totalPosts || "—"}</span>
-                    <span className="text-[10px] uppercase font-black text-muted-foreground opacity-40 mt-1 tracking-widest">Vacancies</span>
-                  </div>
-                </div>
+                ))}
               </div>
             )}
 
