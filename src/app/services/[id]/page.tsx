@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useParams } from "next/navigation";
@@ -17,7 +18,11 @@ import {
   Info,
   MapPin,
   CheckCircle2,
-  AlertTriangle
+  AlertTriangle,
+  CalendarDays,
+  CreditCard,
+  UserRound,
+  FileDigit
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -143,7 +148,7 @@ export default function ServiceDetails() {
             <section className="space-y-4">
               <h2 className="text-xl font-bold flex items-center gap-2">
                 <Info className="w-5 h-5 text-primary" />
-                Detailed Notification Summary
+                Notification Summary
               </h2>
               <div className="p-6 bg-muted/30 rounded-2xl border border-dashed text-muted-foreground leading-relaxed">
                 {service?.description ? (
@@ -154,9 +159,56 @@ export default function ServiceDetails() {
               </div>
             </section>
 
+            {/* Structured Info Grid (Like the user image) */}
+            {(service?.importantDates || service?.applicationFee || service?.ageLimit || service?.totalPosts) && (
+              <div className="grid grid-cols-1 md:grid-cols-2 border border-primary/20 rounded-2xl overflow-hidden shadow-sm bg-card">
+                {/* Important Dates */}
+                <div className="border-b md:border-r border-primary/10">
+                  <div className="bg-primary/5 p-3 flex items-center justify-center gap-2 border-b border-primary/10">
+                    <CalendarDays className="w-4 h-4 text-primary" />
+                    <h4 className="text-[11px] font-black uppercase tracking-widest text-primary">Important Dates</h4>
+                  </div>
+                  <div className="p-5 text-xs text-muted-foreground whitespace-pre-wrap leading-relaxed italic">
+                    {service.importantDates || "Check official notification"}
+                  </div>
+                </div>
+                {/* Application Fee */}
+                <div className="border-b border-primary/10">
+                  <div className="bg-primary/5 p-3 flex items-center justify-center gap-2 border-b border-primary/10">
+                    <CreditCard className="w-4 h-4 text-primary" />
+                    <h4 className="text-[11px] font-black uppercase tracking-widest text-primary">Application Fee</h4>
+                  </div>
+                  <div className="p-5 text-xs text-muted-foreground whitespace-pre-wrap leading-relaxed italic">
+                    {service.applicationFee || "As per official rules"}
+                  </div>
+                </div>
+                {/* Age Limit */}
+                <div className="border-b md:border-b-0 md:border-r border-primary/10">
+                  <div className="bg-primary/5 p-3 flex items-center justify-center gap-2 border-b border-primary/10">
+                    <UserRound className="w-4 h-4 text-primary" />
+                    <h4 className="text-[11px] font-black uppercase tracking-widest text-primary">Age Limit</h4>
+                  </div>
+                  <div className="p-5 text-xs text-muted-foreground whitespace-pre-wrap leading-relaxed italic">
+                    {service.ageLimit || "Refer to detailed notification"}
+                  </div>
+                </div>
+                {/* Total Post */}
+                <div>
+                  <div className="bg-primary/5 p-3 flex items-center justify-center gap-2 border-b border-primary/10">
+                    <FileDigit className="w-4 h-4 text-primary" />
+                    <h4 className="text-[11px] font-black uppercase tracking-widest text-primary">Total Posts</h4>
+                  </div>
+                  <div className="p-5 flex flex-col items-center justify-center min-h-[80px]">
+                    <span className="text-3xl font-black text-primary">{service.totalPosts || "—"}</span>
+                    <span className="text-[9px] uppercase font-bold text-muted-foreground opacity-50">Vacancies</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <AdBanner adSlot="3693488562" variant="horizontal" className="my-0" />
 
-            {/* Added Value Content: Instructions & Warnings */}
+            {/* Guidance & Warnings */}
             <section className="space-y-6">
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-5 bg-card border rounded-2xl space-y-3">
@@ -175,7 +227,7 @@ export default function ServiceDetails() {
                     <AlertTriangle className="w-4 h-4" /> Safety Warning
                   </h4>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Kabhi bhi kisi bhi third-party site par apna payment ya sensitive information share na karein. Hamesha check karein ki website ka URL **.gov.in** ya **.nic.in** par khatam ho raha hai.
+                    Hamesha check karein ki website ka URL **.gov.in** ya **.nic.in** par khatam ho raha hai. Kisi bhi anjan third-party links par apna sensitive data share na karein.
                   </p>
                 </div>
               </div>
@@ -193,7 +245,7 @@ export default function ServiceDetails() {
                   rel="noopener noreferrer"
                   className="flex items-center gap-3"
                 >
-                  Go to Official Portal
+                  Visit Official Website
                   <ExternalLink className="w-5 h-5" />
                 </a>
               </Button>

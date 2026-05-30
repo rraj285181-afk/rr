@@ -1,3 +1,4 @@
+
 export type ServiceCategory = 'Results' | 'Admit Cards' | 'Latest Jobs' | 'Upcoming Jobs' | 'Scholarships' | 'Admissions';
 
 export interface IndianService {
@@ -10,6 +11,10 @@ export interface IndianService {
   isPopular?: boolean;
   imageUrl?: string;
   lastDate?: string;
+  importantDates?: string;
+  applicationFee?: string;
+  ageLimit?: string;
+  totalPosts?: string;
 }
 
 export interface AppConfig {

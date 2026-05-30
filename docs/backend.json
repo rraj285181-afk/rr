@@ -39,6 +39,22 @@
         "lastDate": {
           "type": "string",
           "description": "The last date for application or result check (e.g. 11-06-2026)."
+        },
+        "importantDates": {
+          "type": "string",
+          "description": "Structured list of important dates."
+        },
+        "applicationFee": {
+          "type": "string",
+          "description": "Details about the application fee structure."
+        },
+        "ageLimit": {
+          "type": "string",
+          "description": "Information about minimum and maximum age constraints."
+        },
+        "totalPosts": {
+          "type": "string",
+          "description": "The total number of vacancies available."
         }
       },
       "required": ["name", "url", "category"]
