@@ -26,7 +26,6 @@ const ConciergeOutputSchema = z.object({
 
 /**
  * Tool: Search for services in Firestore.
- * This allows the AI to provide real links from the site's database.
  */
 const searchServicesTool = ai.defineTool(
   {
@@ -46,7 +45,7 @@ const searchServicesTool = ai.defineTool(
     try {
       const { db } = initializeFirebase();
       const servicesRef = collection(db, 'services');
-      const snapshot = await getDocs(query(servicesRef, limit(40)));
+      const snapshot = await getDocs(query(servicesRef, limit(100)));
       const q = input.queryStr.toLowerCase();
       
       const results = snapshot.docs
@@ -54,7 +53,8 @@ const searchServicesTool = ai.defineTool(
         .filter(s => 
           (s.name?.toLowerCase().includes(q)) || 
           (s.category?.toLowerCase().includes(q)) ||
-          (s.description?.toLowerCase().includes(q))
+          (s.description?.toLowerCase().includes(q)) ||
+          (s.state?.toLowerCase().includes(q))
         )
         .map(s => ({
           name: s.name,
@@ -62,9 +62,8 @@ const searchServicesTool = ai.defineTool(
           category: s.category,
           lastDate: s.lastDate
         }))
-        .slice(0, 5);
+        .slice(0, 6);
 
-      console.log(`AI Tool Search for "${q}": Found ${results.length} items`);
       return results;
     } catch (error) {
       console.error("AI Tool Error:", error);
@@ -75,23 +74,23 @@ const searchServicesTool = ai.defineTool(
 
 const conciergePrompt = ai.definePrompt({
   name: 'conciergePrompt',
-  model: 'googleai/gemini-1.5-flash', // Explicitly defining the model
+  model: 'googleai/gemini-1.5-flash',
   input: { schema: ConciergeInputSchema },
   output: { schema: ConciergeOutputSchema },
   tools: [searchServicesTool],
   prompt: `You are the Advanced Smart Bharat Concierge for JobIndians.com.
 Your goal is to help Indian citizens find official government job notifications, exam results, and admit cards.
 
-Role & Voice:
-- Speak in professional "Hinglish" (Mix of Hindi and English) - friendly and encouraging.
-- Always use the 'searchServices' tool if the user asks for a specific exam, result, board, or category.
-- If the tool returns results, list them clearly with their internal links.
-- If no results are found, suggest they check official portals like ssc.gov.in or upsc.gov.in.
+Voice & Tone:
+- Professional "Hinglish" (Mix of Hindi and English).
+- Warm, helpful, and encouraging.
+- Always provide internal links to our portal (/services/ID) if available via searchServices.
 
 Instructions:
-1. Greet the user warmly in Hinglish if they say hi.
-2. If they ask "SSC Result", call 'searchServices' with query "SSC".
-3. Provide helpful follow-up suggestions for the next steps.
+1. Greet the user in Hinglish if they say hi.
+2. For specific exams (SSC, UPSC, RRB), boards, or categories (Results, Jobs), ALWAYS call 'searchServices'.
+3. If searchServices returns results, present them clearly with their links.
+4. If no results found, suggest visiting ssc.gov.in, upsc.gov.in, or sarkariresult.com (common sources).
 
 History:
 {{#each history}}
@@ -110,7 +109,8 @@ const conciergeFlow = ai.defineFlow(
   async (input) => {
     try {
       const { output } = await conciergePrompt(input);
-      return output!;
+      if (!output) throw new Error("No output from prompt");
+      return output;
     } catch (err) {
       console.error("Flow execution error:", err);
       throw err;
@@ -124,7 +124,7 @@ export async function smartBharatConcierge(input: z.infer<typeof ConciergeInputS
   } catch (error) {
     console.error("AI Flow Wrapper Error:", error);
     return {
-      response: "Maaf kijiye, abhi main connect nahi kar pa raha hoon. Aap tab tak main directory manually check kar sakte hain.",
+      response: "Maaf kijiye, main abhi connect nahi kar pa raha hoon. Aap tab tak main directory manually check kar sakte hain.",
       suggestions: ["Check SSC Results", "Download Admit Cards", "Latest Jobs"]
     };
   }

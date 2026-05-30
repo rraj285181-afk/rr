@@ -17,7 +17,7 @@ import {
 import { cn } from "@/lib/utils";
 
 /**
- * Advanced AI Concierge Widget.
+ * Advanced AI Concierge Widget with Enhanced Input and Tool Search Status.
  */
 export function Concierge() {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +55,7 @@ export function Concierge() {
       });
       setMessages(prev => [...prev, { role: 'model', content: result.response }]);
     } catch (error) {
-      setMessages(prev => [...prev, { role: 'model', content: "I'm having trouble connecting right now. Please try again soon." }]);
+      setMessages(prev => [...prev, { role: 'model', content: "Network issue ki wajah se response nahi mil paya. Kripya dobara koshish karein." }]);
     } finally {
       setIsLoading(false);
     }
@@ -88,7 +88,7 @@ export function Concierge() {
                 <h3 className="font-bold text-sm leading-none">Bharat Concierge AI</h3>
                 <p className="text-[10px] opacity-70 flex items-center gap-1">
                   <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-                  Official Assistant • Hinglish
+                  Online • Hinglish Support
                 </p>
               </div>
             </div>
@@ -102,7 +102,7 @@ export function Concierge() {
             </Button>
           </div>
 
-          {/* Messages */}
+          {/* Messages Area */}
           <ScrollArea className="flex-1 p-4 bg-muted/5" ref={scrollRef}>
             <div className="space-y-6 pb-4">
               {messages.map((msg, i) => (
@@ -157,13 +157,13 @@ export function Concierge() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="Exams ya results ke baare mein puchein..."
-                className="rounded-full bg-muted/30 border-none focus-visible:ring-2 focus-visible:ring-primary h-12"
+                placeholder="Type or paste your query here..."
+                className="rounded-full bg-muted/30 border-none focus-visible:ring-2 focus-visible:ring-primary h-12 text-sm"
               />
               <Button 
                 onClick={() => handleSend()}
                 disabled={isLoading || !input.trim()}
-                className="rounded-full w-12 h-12 p-0 shadow-lg"
+                className="rounded-full w-12 h-12 p-0 shadow-lg shrink-0"
               >
                 <Send className="w-5 h-5" />
               </Button>
