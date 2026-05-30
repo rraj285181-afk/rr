@@ -7,10 +7,8 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
-import { collection, query, getDocs, where, limit } from 'firebase/firestore';
+import { collection, query, getDocs, limit } from 'firebase/firestore';
 import { initializeFirebase } from '@/firebase';
-
-const { db } = initializeFirebase();
 
 // Input and Output Schemas
 const ConciergeInputSchema = z.object({
@@ -33,7 +31,7 @@ const ConciergeOutputSchema = z.object({
 const searchServicesTool = ai.defineTool(
   {
     name: 'searchServices',
-    description: 'Searches the JobIndians official directory for specific exams, results, or admit cards.',
+    description: 'Searches the JobIndians official directory for specific exams, boards (SSC, UPSC), or categories.',
     inputSchema: z.object({
       queryStr: z.string().describe('The name of the exam, board, or category to search for.'),
     }),
@@ -46,28 +44,30 @@ const searchServicesTool = ai.defineTool(
   },
   async (input) => {
     try {
+      const { db } = initializeFirebase();
       const servicesRef = collection(db, 'services');
-      // Simple search implementation: fetch all and filter for better matches
-      // In a real large-scale app, we would use Algolia or more complex queries
-      const snapshot = await getDocs(query(servicesRef, limit(20)));
+      const snapshot = await getDocs(query(servicesRef, limit(40)));
       const q = input.queryStr.toLowerCase();
       
-      return snapshot.docs
+      const results = snapshot.docs
         .map(doc => ({ id: doc.id, ...doc.data() } as any))
         .filter(s => 
-          s.name?.toLowerCase().includes(q) || 
-          s.category?.toLowerCase().includes(q) ||
-          s.description?.toLowerCase().includes(q)
+          (s.name?.toLowerCase().includes(q)) || 
+          (s.category?.toLowerCase().includes(q)) ||
+          (s.description?.toLowerCase().includes(q))
         )
         .map(s => ({
           name: s.name,
-          url: `/services/${s.id}`, // Link to internal detail page
+          url: `/services/${s.id}`,
           category: s.category,
           lastDate: s.lastDate
         }))
         .slice(0, 5);
+
+      console.log(`AI Tool Search for "${q}": Found ${results.length} items`);
+      return results;
     } catch (error) {
-      console.error("Tool Error:", error);
+      console.error("AI Tool Error:", error);
       return [];
     }
   }
@@ -75,6 +75,7 @@ const searchServicesTool = ai.defineTool(
 
 const conciergePrompt = ai.definePrompt({
   name: 'conciergePrompt',
+  model: 'googleai/gemini-1.5-flash', // Explicitly defining the model
   input: { schema: ConciergeInputSchema },
   output: { schema: ConciergeOutputSchema },
   tools: [searchServicesTool],
@@ -82,16 +83,15 @@ const conciergePrompt = ai.definePrompt({
 Your goal is to help Indian citizens find official government job notifications, exam results, and admit cards.
 
 Role & Voice:
-- Speak in professional "Hinglish" (Mix of Hindi and English) as it's most comfortable for Indian aspirants.
-- Be polite, encouraging, and accurate.
-- Always use the 'searchServices' tool if the user asks for a specific exam, result, or board.
+- Speak in professional "Hinglish" (Mix of Hindi and English) - friendly and encouraging.
+- Always use the 'searchServices' tool if the user asks for a specific exam, result, board, or category.
+- If the tool returns results, list them clearly with their internal links.
+- If no results are found, suggest they check official portals like ssc.gov.in or upsc.gov.in.
 
 Instructions:
-1. If the user greets you, reply warmly in Hinglish.
-2. If they ask for a link or info about an exam (e.g., "SSC CGL Result kab aayega?"), use the search tool to see if we have it in our directory.
-3. If the tool returns results, list them clearly and encourage them to click the link for details.
-4. If no results are found, guide them to check official portals like ssc.gov.in or upsc.gov.in.
-5. Provide helpful suggestions for follow-up questions.
+1. Greet the user warmly in Hinglish if they say hi.
+2. If they ask "SSC Result", call 'searchServices' with query "SSC".
+3. Provide helpful follow-up suggestions for the next steps.
 
 History:
 {{#each history}}
@@ -108,8 +108,13 @@ const conciergeFlow = ai.defineFlow(
     outputSchema: ConciergeOutputSchema,
   },
   async (input) => {
-    const { output } = await conciergePrompt(input);
-    return output!;
+    try {
+      const { output } = await conciergePrompt(input);
+      return output!;
+    } catch (err) {
+      console.error("Flow execution error:", err);
+      throw err;
+    }
   }
 );
 
@@ -117,9 +122,9 @@ export async function smartBharatConcierge(input: z.infer<typeof ConciergeInputS
   try {
     return await conciergeFlow(input);
   } catch (error) {
-    console.error("AI Flow Error:", error);
+    console.error("AI Flow Wrapper Error:", error);
     return {
-      response: "Maaf kijiye, abhi main connect nahi kar pa raha hoon. Aap tab tak main directory check kar sakte hain.",
+      response: "Maaf kijiye, abhi main connect nahi kar pa raha hoon. Aap tab tak main directory manually check kar sakte hain.",
       suggestions: ["Check SSC Results", "Download Admit Cards", "Latest Jobs"]
     };
   }
