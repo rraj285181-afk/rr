@@ -17,7 +17,6 @@ import {
   Info,
   MapPin,
   CheckCircle2,
-  FileText,
   AlertTriangle
 } from "lucide-react";
 import Link from "next/link";
@@ -157,18 +156,12 @@ export default function ServiceDetails() {
 
             <AdBanner adSlot="3693488562" variant="horizontal" className="my-0" />
 
-            {/* Added Value Content: Step-by-Step Guide (Permanent Content) */}
+            {/* Added Value Content: Instructions & Warnings */}
             <section className="space-y-6">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-primary/10 rounded-lg text-primary">
-                  <FileText className="w-5 h-5" />
-                </div>
-                <h2 className="text-xl font-bold">Important Instructions for Candidates</h2>
-              </div>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-5 bg-card border rounded-2xl space-y-3">
                   <h4 className="font-bold text-sm text-primary flex items-center gap-2 uppercase tracking-wide">
-                    <CheckCircle2 className="w-4 h-4" /> How to Apply / Check
+                    <CheckCircle2 className="w-4 h-4" /> Guidance
                   </h4>
                   <ul className="text-xs text-muted-foreground space-y-2 leading-relaxed">
                     <li>1. Click on the "Visit Official Website" button below.</li>
@@ -204,9 +197,6 @@ export default function ServiceDetails() {
                   <ExternalLink className="w-5 h-5" />
                 </a>
               </Button>
-              <p className="text-[10px] text-muted-foreground text-center max-w-sm italic">
-                Redirecting you safely to the authorized government recruitment board.
-              </p>
             </div>
           </div>
         </div>
