@@ -16,8 +16,6 @@ import {
   AlertCircle,
   Info,
   MapPin,
-  CheckCircle2,
-  AlertTriangle,
   CalendarDays,
   CreditCard,
   UserRound,
@@ -224,30 +222,6 @@ export default function ServiceDetails() {
             )}
 
             <AdBanner adSlot="3693488562" variant="horizontal" className="my-0" />
-
-            {/* Safety Guidance */}
-            <section className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="p-6 bg-card border rounded-2xl space-y-4">
-                  <h4 className="font-bold text-sm text-primary flex items-center gap-2 uppercase tracking-wide">
-                    <CheckCircle2 className="w-4 h-4" /> Quick Steps
-                  </h4>
-                  <ul className="text-xs md:text-sm text-muted-foreground space-y-3 leading-relaxed">
-                    <li className="flex gap-2"><span>1.</span> Click on the "Visit Official Website" button below.</li>
-                    <li className="flex gap-2"><span>2.</span> Search for {service?.name} on the board portal.</li>
-                    <li className="flex gap-2"><span>3.</span> Follow institutional guidelines for application.</li>
-                  </ul>
-                </div>
-                <div className="p-6 bg-orange-500/5 border border-orange-500/10 rounded-2xl space-y-4">
-                  <h4 className="font-bold text-sm text-orange-600 flex items-center gap-2 uppercase tracking-wide">
-                    <AlertTriangle className="w-4 h-4" /> Safety Info
-                  </h4>
-                  <p className="text-xs md:text-sm text-muted-foreground leading-relaxed italic">
-                    Always confirm the site URL ends in **.gov.in** or **.nic.in**. Avoid sharing sensitive personal data on unverified third-party platforms.
-                  </p>
-                </div>
-              </div>
-            </section>
 
             <div className="pt-8 border-t flex flex-col items-center gap-6">
               <Button 
