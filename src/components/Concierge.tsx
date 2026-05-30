@@ -17,13 +17,13 @@ import {
 import { cn } from "@/lib/utils";
 
 /**
- * Advanced AI Concierge Widget with Enhanced Input and Tool Search Status.
+ * Advanced AI Concierge Widget with Robust Error Handling and Scrolling.
  */
 export function Concierge() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<{ role: 'user' | 'model', content: string }[]>([
-    { role: 'model', content: "Namaste! Main aapka Smart Bharat Concierge hoon. Aaj main aapki career ya exams mein kaise madad kar sakta hoon?" }
+    { role: 'model', content: "Namaste! Main aapka Smart Bharat Concierge hoon. Career ya exams se judi kisi bhi madad ke liye mujhse puchein." }
   ]);
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -46,17 +46,22 @@ export function Concierge() {
 
     const userMessage = messageToSend.trim();
     setInput("");
-    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
+    
+    // Optimistic UI update
+    const newMessages = [...messages, { role: 'user' as const, content: userMessage }];
+    setMessages(newMessages);
     setIsLoading(true);
 
     try {
       const result = await smartBharatConcierge({
         message: userMessage,
-        history: messages
+        history: messages.slice(-6) // Send recent context
       });
+      
       setMessages(prev => [...prev, { role: 'model', content: result.response }]);
     } catch (error) {
-      setMessages(prev => [...prev, { role: 'model', content: "Network issue ki wajah se response nahi mil paya. Kripya thodi der baad koshish karein." }]);
+      console.error("Chat Error:", error);
+      setMessages(prev => [...prev, { role: 'model', content: "Network error ki wajah se main connect nahi kar pa raha hoon. Kripya refresh karein." }]);
     } finally {
       setIsLoading(false);
     }
@@ -71,9 +76,6 @@ export function Concierge() {
         >
           <Sparkles className="w-6 h-6 text-white group-hover:rotate-12 transition-transform" />
           <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white animate-bounce" />
-          <span className="absolute -left-36 top-1/2 -translate-y-1/2 bg-black/80 text-white text-[10px] font-bold py-1.5 px-3 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-            Bharat Concierge AI Assistant
-          </span>
         </Button>
       )}
 
@@ -89,7 +91,7 @@ export function Concierge() {
                 <h3 className="font-bold text-sm leading-none">Bharat Concierge AI</h3>
                 <p className="text-[10px] opacity-70 flex items-center gap-1 mt-1">
                   <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-                  Live Help • Hinglish
+                  Online Help • Hinglish
                 </p>
               </div>
             </div>
@@ -132,7 +134,7 @@ export function Concierge() {
                   </div>
                   <div className="bg-card border p-3 rounded-2xl rounded-tl-none flex items-center gap-2 shadow-sm">
                     <Loader2 className="w-3 h-3 animate-spin text-primary" />
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Searching Directory...</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">AI Thinking...</span>
                   </div>
                 </div>
               )}
@@ -141,8 +143,8 @@ export function Concierge() {
           </ScrollArea>
 
           {/* Suggestions */}
-          {!isLoading && messages.length < 5 && (
-            <div className="px-4 py-2 flex gap-2 overflow-x-auto no-scrollbar bg-muted/5">
+          {!isLoading && (
+            <div className="px-4 py-2 flex gap-2 overflow-x-auto no-scrollbar bg-muted/5 border-t">
               {suggestions.map((s, i) => (
                 <button 
                   key={i}
@@ -162,7 +164,7 @@ export function Concierge() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="Type query (e.g. SSC results)..."
+                placeholder="Ask about SSC, UPSC, Jobs..."
                 className="rounded-full bg-muted/30 border-none focus-visible:ring-2 focus-visible:ring-primary h-11 text-sm"
               />
               <Button 
@@ -172,10 +174,6 @@ export function Concierge() {
               >
                 <Send className="w-4 h-4" />
               </Button>
-            </div>
-            <div className="flex items-center justify-center gap-1 mt-3 opacity-40">
-              <p className="text-[8px] font-bold uppercase tracking-widest">Powered by Smart AI</p>
-              <ExternalLink className="w-2 h-2" />
             </div>
           </div>
         </div>

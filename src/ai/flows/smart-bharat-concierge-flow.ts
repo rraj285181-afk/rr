@@ -88,11 +88,11 @@ Voice & Tone:
 - Always provide internal links to our portal (/services/ID) if available via searchServices tool.
 
 Instructions:
-1. Greet the user warmly in Hinglish.
-2. If the user asks for a specific exam (like SSC, UPSC), use the 'searchServices' tool.
-3. Always display links returned by the tool in a clear list format.
-4. If no results found in our database, suggest official websites like ssc.gov.in or upsc.gov.in.
-5. Remind the user that these are for informational purposes and they should always check official gazettes.
+1. Greet the user warmly in Hinglish if it's the start of conversation.
+2. If the user asks for a specific exam (like SSC, UPSC, Railway), use the 'searchServices' tool.
+3. If searchServices returns links, display them as a list and mention they are verified.
+4. If no results are found, suggest official websites like ssc.gov.in, upsc.gov.in or sarkariresult.com as secondary sources.
+5. Keep the conversation focused on Indian jobs and exams.
 
 History:
 {{#each history}}
@@ -102,37 +102,23 @@ History:
 User Query: {{{message}}}`,
 });
 
-const conciergeFlow = ai.defineFlow(
-  {
-    name: 'conciergeFlow',
-    inputSchema: ConciergeInputSchema,
-    outputSchema: ConciergeOutputSchema,
-  },
-  async (input) => {
-    try {
-      const { output } = await conciergePrompt(input);
-      if (!output) {
-        return {
-          response: "Maaf kijiye, main abhi apki puri tarah madad nahi kar paa raha hoon. Kripya koshish karein ya directory check karein.",
-          suggestions: ["Latest Jobs", "Check Results"]
-        };
-      }
-      return output;
-    } catch (err) {
-      console.error("Flow execution error:", err);
-      throw err;
-    }
-  }
-);
-
 export async function smartBharatConcierge(input: z.infer<typeof ConciergeInputSchema>) {
   try {
-    return await conciergeFlow(input);
+    const { output } = await conciergePrompt(input);
+    
+    if (!output) {
+      return {
+        response: "Maaf kijiye, main abhi apki puri tarah madad nahi kar paa raha hoon. Kripya thodi der baad koshish karein ya directory manually check karein.",
+        suggestions: ["Latest Jobs", "Check Results"]
+      };
+    }
+    
+    return output;
   } catch (error) {
-    console.error("AI Flow Wrapper Error:", error);
+    console.error("AI Flow Execution Error:", error);
     return {
-      response: "Technical samasya ki wajah se main abhi connect nahi kar pa raha hoon. Aap manually directory search kar sakte hain.",
-      suggestions: ["Check SSC Results", "Download Admit Cards", "Latest Jobs"]
+      response: "Kshama karein, server se connect karne mein samasya aa rahi hai. Aap hamari official directory use kar sakte hain.",
+      suggestions: ["SSC Results", "UPSC 2026", "Latest Jobs"]
     };
   }
 }
