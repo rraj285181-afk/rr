@@ -42,7 +42,7 @@
         },
         "importantDates": {
           "type": "string",
-          "description": "Structured list of important dates."
+          "description": "Structured list of important dates (use \n for new lines)."
         },
         "applicationFee": {
           "type": "string",
