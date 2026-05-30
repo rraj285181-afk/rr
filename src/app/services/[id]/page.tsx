@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 /**
  * Helper to turn URLs in text into clickable links.
@@ -191,9 +192,12 @@ export default function ServiceDetails() {
               </div>
             </section>
 
-            {/* Dynamic Info Grid (Only shows populated fields) */}
+            {/* Dynamic Info Grid (Adjusts based on count) */}
             {infoBlocks.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-primary/20 border border-primary/20 rounded-2xl overflow-hidden shadow-sm bg-primary/20">
+              <div className={cn(
+                "grid gap-px bg-primary/20 border border-primary/20 rounded-2xl overflow-hidden shadow-sm",
+                infoBlocks.length > 1 ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"
+              )}>
                 {infoBlocks.map((block) => (
                   <div key={block.id} className="bg-card flex flex-col min-h-[140px]">
                     <div className="bg-primary/5 p-3.5 flex items-center justify-center gap-2 border-b border-primary/10">
