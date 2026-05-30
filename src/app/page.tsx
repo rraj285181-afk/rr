@@ -19,20 +19,20 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      {/* Navigation - Optimized for Mobile with Theme Toggle */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-2 group cursor-pointer">
-              <div className="w-8 h-8 md:w-9 md:h-9 bg-primary rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                <span className="text-white font-black text-lg md:text-xl leading-none">J</span>
+      {/* Navigation - Optimized for all screen sizes */}
+      <nav className="fixed top-0 left-0 right-0 z-[100] bg-background/90 backdrop-blur-md border-b shadow-sm">
+        <div className="max-w-7xl mx-auto px-2 md:px-4 h-16 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 shrink-0">
+            <Link href="/" className="flex items-center gap-1.5 md:gap-2 group cursor-pointer">
+              <div className="w-7 h-7 md:w-9 md:h-9 bg-primary rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <span className="text-white font-black text-base md:text-xl leading-none">J</span>
               </div>
-              <span className="text-lg md:text-xl font-bold tracking-tight text-primary">JobIndians</span>
+              <span className="text-base md:text-xl font-bold tracking-tight text-primary hidden xs:block">JobIndians</span>
             </Link>
           </div>
           
-          <div className="flex items-center gap-2 md:gap-4">
-            <div className="hidden sm:flex items-center gap-4 text-xs md:text-sm font-bold uppercase tracking-wider mr-2">
+          <div className="flex items-center gap-1.5 md:gap-4 overflow-hidden">
+            <div className="hidden lg:flex items-center gap-6 text-[10px] font-bold uppercase tracking-widest mr-4 opacity-70">
               <a href="#directory" className="hover:text-primary transition-colors">Directory</a>
               <a href="#calendar" className="hover:text-primary transition-colors">Calendar</a>
             </div>
@@ -43,16 +43,16 @@ export default function Home() {
       </nav>
 
       <div className="pt-16">
-        <main className="max-w-7xl w-full mx-auto px-4 py-8 md:py-12 space-y-16 md:space-y-24">
+        <main className="max-w-7xl w-full mx-auto px-4 py-8 md:py-12 space-y-12 md:space-y-24">
           <section id="directory" className="space-y-8">
-            <div className="text-center space-y-4">
-              <h2 className="text-2xl md:text-5xl font-bold tracking-tight">Official Service Directory</h2>
-              <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto px-4">
+            <div className="text-center space-y-3">
+              <h2 className="text-2xl md:text-5xl font-bold tracking-tight px-2">Official Service Directory</h2>
+              <p className="text-xs md:text-base text-muted-foreground max-w-2xl mx-auto px-6">
                 Direct access to Board Results, Admit Cards, and Latest Recruitment notifications from verified official sources.
               </p>
             </div>
 
-            <div className="max-w-4xl mx-auto w-full px-2">
+            <div className="max-w-4xl mx-auto w-full px-1">
               <Marquee />
             </div>
 
@@ -62,9 +62,9 @@ export default function Home() {
           <AdBanner adSlot="3693488562" variant="horizontal" className="my-4" />
 
           <section id="calendar" className="space-y-8 py-4">
-            <div className="text-center space-y-4 px-4">
+            <div className="text-center space-y-3 px-4">
               <h2 className="text-2xl md:text-5xl font-bold tracking-tight">Sarkari Exam Calendar 2026</h2>
-              <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-xs md:text-base text-muted-foreground max-w-2xl mx-auto">
                 Stay ahead with the latest upcoming exam schedules and notification dates for the 2026 session.
               </p>
             </div>
@@ -83,7 +83,7 @@ export default function Home() {
                       {item.icon}
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className={`text-[9px] md:text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded ${
+                      <span className={`text-[8px] md:text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded ${
                         item.status === 'Active' ? 'bg-green-500/10 text-green-600' : 
                         item.status === 'Upcoming' ? 'bg-blue-500/10 text-blue-600' : 
                         'bg-muted text-muted-foreground'
@@ -95,7 +95,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="font-bold text-base md:text-lg group-hover:text-primary transition-colors">{item.title}</h4>
-                    <p className="text-xs md:text-sm text-muted-foreground">Expected: {item.date}</p>
+                    <p className="text-[10px] md:text-sm text-muted-foreground">Expected: {item.date}</p>
                   </div>
                 </a>
               ))}
@@ -137,7 +137,7 @@ export default function Home() {
             </ul>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto px-6 pt-8 mt-8 border-t text-center text-[10px] md:text-xs text-muted-foreground uppercase tracking-widest font-medium">
+        <div className="max-w-7xl mx-auto px-6 pt-8 mt-8 border-t text-center text-[9px] md:text-xs text-muted-foreground uppercase tracking-widest font-medium">
           © {new Date().getFullYear()} JobIndians. Professional Citizen Notification Service.
         </div>
       </footer>

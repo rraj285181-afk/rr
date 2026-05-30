@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useMemo, useEffect, Suspense } from "react";
@@ -57,9 +56,9 @@ function ServiceGridContent() {
   }
 
   return (
-    <div className="space-y-6 md:space-y-8 px-2 md:px-0">
+    <div className="space-y-6 md:space-y-8 px-1 md:px-0">
       {/* Mobile-Optimized Unified Search Bar */}
-      <div className="flex flex-col lg:flex-row items-stretch rounded-2xl border bg-card/40 backdrop-blur-md shadow-sm divide-y lg:divide-y-0 lg:divide-x overflow-hidden transition-all focus-within:ring-2 focus-within:ring-primary/10">
+      <div className="flex flex-col lg:flex-row items-stretch rounded-2xl border bg-card/40 backdrop-blur-md shadow-sm divide-y lg:divide-y-0 lg:divide-x overflow-hidden transition-all focus-within:ring-2 focus-within:ring-primary/10 mx-1 md:mx-0">
         
         <div className="flex-1 relative group">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
@@ -67,14 +66,14 @@ function ServiceGridContent() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search Board or Exam Name..."
-            className="pl-11 h-14 md:h-12 border-0 bg-transparent focus-visible:ring-0 font-medium text-sm md:text-base"
+            className="pl-11 h-12 md:h-12 border-0 bg-transparent focus-visible:ring-0 font-medium text-[13px] md:text-base"
           />
         </div>
 
-        <div className="w-full lg:w-64 flex items-center px-4 bg-muted/5 group h-14 md:h-12">
-          <Filter className="w-4 h-4 text-muted-foreground mr-3 group-hover:text-primary transition-colors shrink-0" />
+        <div className="w-full lg:w-64 flex items-center px-4 bg-muted/5 group h-12 md:h-12 overflow-hidden">
+          <Filter className="w-3.5 h-3.5 text-muted-foreground mr-3 group-hover:text-primary transition-colors shrink-0" />
           <Select value={category} onValueChange={(v) => setCategory(v as any)}>
-            <SelectTrigger className="h-full border-0 bg-transparent focus:ring-0 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-wider p-0 w-full">
+            <SelectTrigger className="h-full border-0 bg-transparent focus:ring-0 rounded-none font-bold text-[9px] md:text-xs uppercase tracking-wider p-0 w-full truncate">
               <SelectValue placeholder="CATEGORY" />
             </SelectTrigger>
             <SelectContent>
@@ -89,10 +88,10 @@ function ServiceGridContent() {
           </Select>
         </div>
 
-        <div className="w-full lg:w-60 flex items-center px-4 bg-muted/5 group h-14 md:h-12">
-          <MapPin className="w-4 h-4 text-muted-foreground mr-3 group-hover:text-primary transition-colors shrink-0" />
+        <div className="w-full lg:w-60 flex items-center px-4 bg-muted/5 group h-12 md:h-12 overflow-hidden">
+          <MapPin className="w-3.5 h-3.5 text-muted-foreground mr-3 group-hover:text-primary transition-colors shrink-0" />
           <Select value={state} onValueChange={setState}>
-            <SelectTrigger className="h-full border-0 bg-transparent focus:ring-0 rounded-none font-bold text-[10px] md:text-xs uppercase tracking-wider p-0 w-full">
+            <SelectTrigger className="h-full border-0 bg-transparent focus:ring-0 rounded-none font-bold text-[9px] md:text-xs uppercase tracking-wider p-0 w-full truncate">
               <SelectValue placeholder="STATE" />
             </SelectTrigger>
             <SelectContent>
@@ -104,29 +103,29 @@ function ServiceGridContent() {
       </div>
 
       {/* Results List - Links to detail page with Last Date highlight */}
-      <div className="border rounded-2xl bg-card overflow-hidden shadow-md">
+      <div className="border rounded-2xl bg-card overflow-hidden shadow-md mx-1 md:mx-0">
         {filteredServices.length > 0 ? (
           filteredServices.map((service, i) => (
             <Link 
               key={service.id}
               href={`/services/${service.id}`}
-              className={`group flex items-center justify-between px-4 md:px-8 py-4 md:py-6 hover:bg-primary/[0.03] transition-all ${i !== filteredServices.length - 1 ? 'border-b' : ''}`}
+              className={`group flex items-center justify-between px-3 md:px-8 py-3.5 md:py-6 hover:bg-primary/[0.03] transition-all ${i !== filteredServices.length - 1 ? 'border-b' : ''}`}
             >
-              <div className="space-y-1.5 flex-1 min-w-0 pr-4">
-                <div className="flex items-center gap-2">
-                  <h3 className="font-bold text-sm md:text-lg group-hover:text-primary transition-colors line-clamp-1">
+              <div className="space-y-1.5 flex-1 min-w-0 pr-2">
+                <div className="flex items-center gap-1.5 md:gap-2">
+                  <h3 className="font-bold text-[13px] md:text-lg group-hover:text-primary transition-colors truncate">
                     {service.name}
                   </h3>
                   {service.isPopular && (
-                    <span className="bg-orange-500 text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-tighter">Hot</span>
+                    <span className="bg-orange-500 text-white text-[7px] md:text-[8px] font-black px-1 py-0.5 rounded uppercase tracking-tighter shrink-0">Hot</span>
                   )}
                 </div>
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                  <div className="text-[9px] md:text-[10px] uppercase font-black tracking-widest text-primary/70 flex items-center gap-1">
-                    <MapPin className="w-2.5 h-2.5" />
+                <div className="flex flex-wrap items-center gap-x-2 md:gap-x-3 gap-y-0.5 opacity-70">
+                  <div className="text-[8px] md:text-[10px] uppercase font-black tracking-widest text-primary/70 flex items-center gap-1">
+                    <MapPin className="w-2 md:w-2.5 h-2 md:h-2.5" />
                     {service.state || "All India"}
                   </div>
-                  <div className="text-[9px] md:text-[10px] uppercase font-bold tracking-widest text-muted-foreground opacity-50">
+                  <div className="text-[8px] md:text-[10px] uppercase font-bold tracking-widest text-muted-foreground">
                     {service.category}
                   </div>
                 </div>
@@ -135,8 +134,8 @@ function ServiceGridContent() {
               <div className="flex items-center gap-2 md:gap-4 shrink-0">
                 {service.lastDate && service.lastDate.trim() !== "" && (
                   <div className="flex flex-col items-end">
-                    <span className="text-[10px] md:text-sm font-black text-red-600 bg-red-500/5 px-2 md:px-3 py-1.5 rounded-lg border border-red-500/10 whitespace-nowrap shadow-sm">
-                      <span className="text-[8px] md:text-[10px] font-bold uppercase tracking-tighter md:tracking-widest opacity-60 mr-1">Last Date:</span>
+                    <span className="text-[8px] md:text-sm font-black text-red-600 bg-red-500/5 px-2 md:px-3 py-1 md:py-1.5 rounded-md md:rounded-lg border border-red-500/10 whitespace-nowrap shadow-sm">
+                      <span className="hidden xs:inline text-[7px] md:text-[10px] font-bold uppercase tracking-tighter opacity-60 mr-1">Last Date:</span>
                       {service.lastDate}
                     </span>
                   </div>
@@ -148,7 +147,7 @@ function ServiceGridContent() {
         ) : (
           <div className="py-24 text-center opacity-30">
             <LinkIcon className="w-12 h-12 mx-auto mb-4" />
-            <p className="font-bold text-xs md:text-sm uppercase tracking-[0.2em]">No official links found</p>
+            <p className="font-bold text-[10px] md:text-sm uppercase tracking-[0.2em]">No official links found</p>
           </div>
         )}
       </div>
