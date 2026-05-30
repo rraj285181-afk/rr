@@ -7,6 +7,7 @@ import { Concierge } from "@/components/Concierge";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Calendar, Briefcase, Award, Bell, ExternalLink } from "lucide-react";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
   const calendarItems = [
@@ -180,20 +181,20 @@ export default function Home() {
             <div className="space-y-6">
               <h4 className="font-bold text-xs md:text-sm uppercase tracking-[0.2em] text-primary/80 border-b border-primary/10 pb-3">Official Services</h4>
               <ul className="text-sm space-y-4 text-muted-foreground font-semibold">
-                <li><Link href="/?category=Results#directory" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Exam Results</Link></li>
-                <li><Link href="/?category=Admit Cards#directory" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Admit Cards</Link></li>
-                <li><Link href="/?category=Latest Jobs#directory" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Latest Jobs</Link></li>
-                <li><Link href="/?category=Scholarships#directory" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Scholarships</Link></li>
+                <li><Link href="/?category=Results#directory" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRightIcon className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Exam Results</Link></li>
+                <li><Link href="/?category=Admit Cards#directory" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRightIcon className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Admit Cards</Link></li>
+                <li><Link href="/?category=Latest Jobs#directory" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRightIcon className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Latest Jobs</Link></li>
+                <li><Link href="/?category=Scholarships#directory" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRightIcon className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Scholarships</Link></li>
               </ul>
             </div>
             
             <div className="space-y-6">
               <h4 className="font-bold text-xs md:text-sm uppercase tracking-[0.2em] text-primary/80 border-b border-primary/10 pb-3">Quick Links</h4>
               <ul className="text-sm space-y-4 text-muted-foreground font-semibold">
-                <li><Link href="/about" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />About Us</Link></li>
-                <li><Link href="/contact" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Contact Us</Link></li>
-                <li><Link href="/privacy" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Privacy Policy</Link></li>
-                <li><Link href="/terms" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Terms & Conditions</Link></li>
+                <li><Link href="/about" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRightIcon className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />About Us</Link></li>
+                <li><Link href="/contact" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRightIcon className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Contact Us</Link></li>
+                <li><Link href="/privacy" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRightIcon className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Privacy Policy</Link></li>
+                <li><Link href="/terms" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRightIcon className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Terms & Conditions</Link></li>
               </ul>
             </div>
           </div>
@@ -213,7 +214,7 @@ export default function Home() {
   );
 }
 
-function ChevronRight({ className }: { className?: string }) {
+function ChevronRightIcon({ className }: { className?: string }) {
   return (
     <svg 
       xmlns="http://www.w3.org/2000/svg" 
