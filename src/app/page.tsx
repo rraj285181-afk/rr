@@ -69,7 +69,7 @@ export default function Home() {
               <div className="w-7 h-7 md:w-9 md:h-9 bg-primary rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                 <span className="text-white font-black text-base md:text-xl leading-none">J</span>
               </div>
-              <span className="text-base md:text-xl font-bold tracking-tight text-primary hidden xs:block">JobIndians</span>
+              <span className="text-base md:text-xl font-bold tracking-tight text-primary">JobIndians</span>
             </Link>
           </div>
           

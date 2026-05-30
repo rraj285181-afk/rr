@@ -98,7 +98,7 @@ export default function ServiceDetails() {
               <div className="w-7 h-7 bg-primary rounded-full flex items-center justify-center shadow-md">
                 <span className="text-white font-black text-xs">J</span>
               </div>
-              <span className="text-sm font-bold text-primary tracking-tight hidden xs:inline">JobIndians</span>
+              <span className="text-sm font-bold text-primary tracking-tight">JobIndians</span>
             </div>
             <ThemeToggle />
           </div>
