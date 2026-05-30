@@ -3,6 +3,7 @@
 /**
  * @fileOverview Advanced Smart Bharat Concierge AI Flow.
  * Features: Firestore Tool Integration for real-time link lookup.
+ * Optimized for Genkit 1.x
  */
 
 import { ai } from '@/ai/genkit';
@@ -62,7 +63,7 @@ const searchServicesTool = ai.defineTool(
           category: s.category,
           lastDate: s.lastDate
         }))
-        .slice(0, 6);
+        .slice(0, 5);
 
       return results;
     } catch (error) {
@@ -84,13 +85,14 @@ Your goal is to help Indian citizens find official government job notifications,
 Voice & Tone:
 - Professional "Hinglish" (Mix of Hindi and English).
 - Warm, helpful, and encouraging.
-- Always provide internal links to our portal (/services/ID) if available via searchServices.
+- Always provide internal links to our portal (/services/ID) if available via searchServices tool.
 
 Instructions:
-1. Greet the user in Hinglish if they say hi.
-2. For specific exams (SSC, UPSC, RRB), boards, or categories (Results, Jobs), ALWAYS call 'searchServices'.
-3. If searchServices returns results, present them clearly with their links.
-4. If no results found, suggest visiting ssc.gov.in, upsc.gov.in, or sarkariresult.com (common sources).
+1. Greet the user warmly in Hinglish.
+2. If the user asks for a specific exam (like SSC, UPSC), use the 'searchServices' tool.
+3. Always display links returned by the tool in a clear list format.
+4. If no results found in our database, suggest official websites like ssc.gov.in or upsc.gov.in.
+5. Remind the user that these are for informational purposes and they should always check official gazettes.
 
 History:
 {{#each history}}
@@ -109,7 +111,12 @@ const conciergeFlow = ai.defineFlow(
   async (input) => {
     try {
       const { output } = await conciergePrompt(input);
-      if (!output) throw new Error("No output from prompt");
+      if (!output) {
+        return {
+          response: "Maaf kijiye, main abhi apki puri tarah madad nahi kar paa raha hoon. Kripya koshish karein ya directory check karein.",
+          suggestions: ["Latest Jobs", "Check Results"]
+        };
+      }
       return output;
     } catch (err) {
       console.error("Flow execution error:", err);
@@ -124,7 +131,7 @@ export async function smartBharatConcierge(input: z.infer<typeof ConciergeInputS
   } catch (error) {
     console.error("AI Flow Wrapper Error:", error);
     return {
-      response: "Maaf kijiye, main abhi connect nahi kar pa raha hoon. Aap tab tak main directory manually check kar sakte hain.",
+      response: "Technical samasya ki wajah se main abhi connect nahi kar pa raha hoon. Aap manually directory search kar sakte hain.",
       suggestions: ["Check SSC Results", "Download Admit Cards", "Latest Jobs"]
     };
   }
