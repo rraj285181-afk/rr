@@ -107,42 +107,73 @@ export default function Home() {
       </div>
 
       <footer className="border-t bg-card py-12 mt-24">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-xs">J</span>
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-12 md:gap-16">
+          {/* Brand Identity */}
+          <div className="space-y-4 text-center lg:text-left">
+            <div className="flex items-center justify-center lg:justify-start gap-2">
+              <div className="w-7 h-7 bg-primary rounded-full flex items-center justify-center shadow-lg">
+                <span className="text-white font-black text-sm">J</span>
               </div>
-              <span className="text-lg font-bold text-primary">JobIndians</span>
+              <span className="text-xl font-bold text-primary tracking-tight">JobIndians</span>
             </div>
-            <p className="text-sm text-muted-foreground">
-              Simplifying access to official Indian government recruitment notifications.
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto lg:mx-0">
+              Verified access to official Indian government recruitment notifications, exam results, and citizen services.
             </p>
           </div>
-          <div className="space-y-4">
-            <h4 className="font-bold text-sm uppercase tracking-widest text-primary/80">Official Services</h4>
-            <ul className="text-sm space-y-2 text-muted-foreground">
-              <li><Link href="/?category=Results#directory" className="hover:text-primary transition-colors">Exam Results</Link></li>
-              <li><Link href="/?category=Admit Cards#directory" className="hover:text-primary transition-colors">Admit Cards</Link></li>
-              <li><Link href="/?category=Latest Jobs#directory" className="hover:text-primary transition-colors">Latest Notifications</Link></li>
-            </ul>
-          </div>
-          <div className="space-y-4">
-            <h4 className="font-bold text-sm uppercase tracking-widest text-primary/80">Quick Links</h4>
-            <ul className="text-sm space-y-2 text-muted-foreground">
-              <li><Link href="/about" className="hover:text-primary transition-colors">About Us</Link></li>
-              <li><Link href="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
-              <li><Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
-              <li><Link href="/terms" className="hover:text-primary transition-colors">Terms & Conditions</Link></li>
-            </ul>
+
+          {/* Links Container - Side by Side on Mobile and Desktop */}
+          <div className="lg:col-span-2 grid grid-cols-2 gap-8 md:gap-12">
+            <div className="space-y-4">
+              <h4 className="font-bold text-xs md:text-sm uppercase tracking-widest text-primary/80 border-b pb-2">Official Services</h4>
+              <ul className="text-xs md:text-sm space-y-3 text-muted-foreground font-medium">
+                <li><Link href="/?category=Results#directory" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Exam Results</Link></li>
+                <li><Link href="/?category=Admit Cards#directory" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Admit Cards</Link></li>
+                <li><Link href="/?category=Latest Jobs#directory" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Latest Jobs</Link></li>
+                <li><Link href="/?category=Scholarships#directory" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Scholarships</Link></li>
+              </ul>
+            </div>
+            
+            <div className="space-y-4">
+              <h4 className="font-bold text-xs md:text-sm uppercase tracking-widest text-primary/80 border-b pb-2">Quick Links</h4>
+              <ul className="text-xs md:text-sm space-y-3 text-muted-foreground font-medium">
+                <li><Link href="/about" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />About Us</Link></li>
+                <li><Link href="/contact" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Contact Us</Link></li>
+                <li><Link href="/privacy" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Privacy Policy</Link></li>
+                <li><Link href="/terms" className="hover:text-primary transition-colors flex items-center gap-2 group"><ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />Terms & Conditions</Link></li>
+              </ul>
+            </div>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto px-6 pt-8 mt-8 border-t text-center text-[9px] md:text-xs text-muted-foreground uppercase tracking-widest font-medium">
-          © {new Date().getFullYear()} JobIndians. Professional Citizen Notification Service.
+        
+        <div className="max-w-7xl mx-auto px-6 pt-8 mt-12 border-t text-center space-y-2">
+          <p className="text-[10px] md:text-xs text-muted-foreground uppercase tracking-[0.2em] font-bold">
+            © {new Date().getFullYear()} JobIndians Portal
+          </p>
+          <p className="text-[8px] md:text-[10px] text-muted-foreground/60 uppercase tracking-widest italic">
+            Official Citizen Notification Service • All Rights Reserved
+          </p>
         </div>
       </footer>
-
       <Concierge />
     </div>
+  );
+}
+
+function ChevronRight({ className }: { className?: string }) {
+  return (
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      width="24" 
+      height="24" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth="2" 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className={className}
+    >
+      <path d="m9 18 6-6-6-6"/>
+    </svg>
   );
 }
