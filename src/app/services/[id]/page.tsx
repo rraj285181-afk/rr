@@ -192,23 +192,25 @@ export default function ServiceDetails() {
               </div>
             </section>
 
-            {/* Dynamic Info Grid with Clear Dividers and Strict Left-Alignment */}
+            {/* Dynamic Info Grid with Highly Visible Dividers and Strict Left-Alignment */}
             {infoBlocks.length > 0 && (
               <div className={cn(
-                "grid gap-[1px] bg-border border border-border rounded-2xl overflow-hidden shadow-sm",
+                "grid gap-[1.5px] bg-border/80 border border-border/80 rounded-2xl overflow-hidden shadow-md",
                 infoBlocks.length > 1 ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"
               )}>
                 {infoBlocks.map((block) => (
                   <div key={block.id} className="bg-card flex flex-col min-h-[140px]">
-                    <div className="bg-primary/5 p-5 flex items-center justify-start gap-2 border-b border-border/50">
-                      <block.icon className="w-4 h-4 text-primary shrink-0" />
-                      <h4 className="text-[12px] font-black uppercase tracking-[0.1em] text-primary">{block.label}</h4>
+                    {/* Header bar within block */}
+                    <div className="bg-muted/30 p-4 flex items-center justify-start gap-2 border-b border-border/50">
+                      <block.icon className="w-3.5 h-3.5 text-primary shrink-0" />
+                      <h4 className="text-[10px] font-black uppercase tracking-[0.1em] text-muted-foreground">{block.label}</h4>
                     </div>
+                    {/* Value container - strictly left-aligned */}
                     <div className="p-6 flex-1 flex flex-col items-start justify-center text-left">
                       {block.isCounter ? (
                         <div className="flex flex-col items-start text-left w-full">
                           <span className="text-4xl md:text-5xl font-black text-primary tracking-tighter leading-none">{block.value}</span>
-                          <span className="text-[10px] uppercase font-black text-muted-foreground opacity-40 mt-1 tracking-widest">Vacancies</span>
+                          <span className="text-[10px] uppercase font-black text-muted-foreground opacity-40 mt-1 tracking-widest">Total Vacancies</span>
                         </div>
                       ) : (
                         <div className="text-sm md:text-base font-bold text-foreground whitespace-pre-wrap leading-relaxed text-left w-full">
@@ -228,12 +230,12 @@ export default function ServiceDetails() {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-6 bg-card border rounded-2xl space-y-4">
                   <h4 className="font-bold text-sm text-primary flex items-center gap-2 uppercase tracking-wide">
-                    <CheckCircle2 className="w-4 h-4" /> Step-by-Step
+                    <CheckCircle2 className="w-4 h-4" /> Quick Steps
                   </h4>
                   <ul className="text-xs md:text-sm text-muted-foreground space-y-3 leading-relaxed">
-                    <li className="flex gap-2"><span>1.</span> Click on the "Visit Official Website" button.</li>
-                    <li className="flex gap-2"><span>2.</span> Search for reference: {service?.name}.</li>
-                    <li className="flex gap-2"><span>3.</span> Keep documents ready for official submission.</li>
+                    <li className="flex gap-2"><span>1.</span> Click on the "Visit Official Website" button below.</li>
+                    <li className="flex gap-2"><span>2.</span> Search for {service?.name} on the board portal.</li>
+                    <li className="flex gap-2"><span>3.</span> Follow institutional guidelines for application.</li>
                   </ul>
                 </div>
                 <div className="p-6 bg-orange-500/5 border border-orange-500/10 rounded-2xl space-y-4">
