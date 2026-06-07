@@ -73,28 +73,28 @@ export default function Home() {
                     </div>
                     <span className="text-sm md:text-xl font-black text-foreground tracking-tight truncate">JobIndians</span>
                   </div>
-                  <p className="text-[10px] md:text-sm text-muted-foreground leading-relaxed font-medium">
+                  <p className="text-[12px] md:text-[15px] text-muted-foreground leading-relaxed font-medium">
                     Access to official Indian government recruitment notifications, exam results, and citizen services.
                   </p>
                 </div>
 
-                <div className="space-y-1 w-[30%] md:w-1/3 text-left">
-                  <h4 className="font-bold text-[9px] md:text-xs uppercase tracking-[0.1em] md:tracking-[0.2em] text-primary/90 dark:text-sky-400 border-b border-primary/10 pb-1.5 md:pb-2 whitespace-nowrap">Quick Links</h4>
-                  <ul className="text-[10px] md:text-sm space-y-0.5 md:space-y-1 text-muted-foreground font-semibold">
-                    <li><Link href="/?category=Results#directory" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-2.5 md:group-hover:w-3.5 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />Exam Results</Link></li>
-                    <li><Link href="/?category=Admit Cards#directory" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-2.5 md:group-hover:w-3.5 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />Admit Cards</Link></li>
-                    <li><Link href="/?category=Current Jobs#directory" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-2.5 md:group-hover:w-3.5 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />Current Jobs</Link></li>
-                    <li><Link href="/?category=Scholarships#directory" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-2.5 md:group-hover:w-3.5 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />Scholarships</Link></li>
+                <div className="space-y-1.5 w-[30%] md:w-1/3 text-left">
+                  <h4 className="font-bold text-[11px] md:text-[13px] uppercase tracking-[0.1em] md:tracking-[0.2em] text-primary/90 dark:text-sky-400 border-b border-primary/10 pb-1.5 md:pb-2 whitespace-nowrap">Quick Links</h4>
+                  <ul className="text-[12px] md:text-[15px] space-y-0.5 md:space-y-1 text-muted-foreground font-semibold">
+                    <li><Link href="/?category=Results#directory" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-3.5 md:group-hover:w-4 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />Exam Results</Link></li>
+                    <li><Link href="/?category=Admit Cards#directory" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-3.5 md:group-hover:w-4 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />Admit Cards</Link></li>
+                    <li><Link href="/?category=Current Jobs#directory" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-3.5 md:group-hover:w-4 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />Current Jobs</Link></li>
+                    <li><Link href="/?category=Scholarships#directory" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-3.5 md:group-hover:w-4 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />Scholarships</Link></li>
                   </ul>
                 </div>
 
-                <div className="space-y-1 w-[30%] md:w-1/3 text-left">
-                  <h4 className="font-bold text-[9px] md:text-xs uppercase tracking-[0.1em] md:tracking-[0.2em] text-primary/90 dark:text-sky-400 border-b border-primary/10 pb-1.5 md:pb-2 whitespace-nowrap">Official Services</h4>
-                  <ul className="text-[10px] md:text-sm space-y-0.5 md:space-y-1 text-muted-foreground font-semibold">
-                    <li><Link href="/about" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-2.5 md:group-hover:w-3.5 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />About Us</Link></li>
-                    <li><Link href="/contact" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-2.5 md:group-hover:w-3.5 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />Contact Us</Link></li>
-                    <li><Link href="/privacy" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-2.5 md:group-hover:w-3.5 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />Privacy Policy</Link></li>
-                    <li><Link href="/terms" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-2.5 md:group-hover:w-3.5 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />Terms & Conditions</Link></li>
+                <div className="space-y-1.5 w-[30%] md:w-1/3 text-left">
+                  <h4 className="font-bold text-[11px] md:text-[13px] uppercase tracking-[0.1em] md:tracking-[0.2em] text-primary/90 dark:text-sky-400 border-b border-primary/10 pb-1.5 md:pb-2 whitespace-nowrap">Official Services</h4>
+                  <ul className="text-[12px] md:text-[15px] space-y-0.5 md:space-y-1 text-muted-foreground font-semibold">
+                    <li><Link href="/about" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-3.5 md:group-hover:w-4 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />About Us</Link></li>
+                    <li><Link href="/contact" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-3.5 md:group-hover:w-4 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />Contact Us</Link></li>
+                    <li><Link href="/privacy" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-3.5 md:group-hover:w-4 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />Privacy Policy</Link></li>
+                    <li><Link href="/terms" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-3.5 md:group-hover:w-4 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />Terms & Conditions</Link></li>
                   </ul>
                 </div>
               </div>
