@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Sabhi access by default band hai
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Category-specific collections: Sirf public read allowed hai.
+    // Client-side se koi bhi 'write' (create, update, delete) nahi kar sakta.
+    match /results/{id} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /admit_cards/{id} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /current_jobs/{id} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /upcoming_jobs/{id} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /scholarships/{id} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /admissions/{id} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}

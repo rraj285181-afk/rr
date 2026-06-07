@@ -1,0 +1,116 @@
+
+{
+  "entities": {
+    "IndianService": {
+      "title": "Indian Service Portal",
+      "description": "Information about official government portals for jobs, results, and admit cards.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the service/portal."
+        },
+        "description": {
+          "type": "string",
+          "description": "Brief description of what the portal offers."
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "The official link to the portal."
+        },
+        "category": {
+          "type": "string",
+          "enum": ["Results", "Admit Cards", "Latest Jobs", "Upcoming Jobs", "Scholarships", "Admissions"],
+          "description": "The specific category of the service."
+        },
+        "state": {
+          "type": "string",
+          "description": "The state this service belongs to, or 'All India'."
+        },
+        "isPopular": {
+          "type": "boolean",
+          "description": "Whether this is a high-traffic trending portal."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL for the portal logo or representative image."
+        },
+        "lastDate": {
+          "type": "string",
+          "description": "The last date for application or result check (e.g. 11-06-2026)."
+        },
+        "importantDates": {
+          "type": "string",
+          "description": "Structured list of important dates (use \n for new lines)."
+        },
+        "applicationFee": {
+          "type": "string",
+          "description": "Details about the application fee structure."
+        },
+        "ageLimit": {
+          "type": "string",
+          "description": "Information about minimum and maximum age constraints."
+        },
+        "totalPosts": {
+          "type": "string",
+          "description": "The total number of vacancies available."
+        }
+      },
+      "required": ["name", "url", "category"]
+    },
+    "AppConfig": {
+      "title": "App Configuration",
+      "description": "Global settings for the application UI.",
+      "type": "object",
+      "properties": {
+        "heroImageUrl": {
+          "type": "string",
+          "description": "The main hero banner image URL."
+        },
+        "heroTitle": {
+          "type": "string",
+          "description": "Main headline of the site."
+        },
+        "heroSubtitle": {
+          "type": "string",
+          "description": "Sub-headline of the site."
+        }
+      }
+    },
+    "TickerConfig": {
+      "title": "Ticker Messages",
+      "description": "Messages for the scrolling marquee with optional links.",
+      "type": "object",
+      "properties": {
+        "name1": { "type": "string" },
+        "url1": { "type": "string", "format": "uri" },
+        "name2": { "type": "string" },
+        "url2": { "type": "string", "format": "uri" },
+        "name3": { "type": "string" },
+        "url3": { "type": "string", "format": "uri" },
+        "name4": { "type": "string" },
+        "url4": { "type": "string", "format": "uri" },
+        "name5": { "type": "string" },
+        "url5": { "type": "string", "format": "uri" }
+      }
+    }
+  },
+  "auth": {
+    "providers": ["google.com"]
+  },
+  "firestore": {
+    "/services/{serviceId}": {
+      "schema": "IndianService",
+      "description": "Collection of official Indian government service portals. Publicly readable."
+    },
+    "/config/home": {
+      "schema": "AppConfig",
+      "description": "Home page configuration."
+    },
+    "/config/tickerMessages": {
+      "schema": "TickerConfig",
+      "description": "Scrolling ticker configuration with names and clickable URLs."
+    }
+  }
+}

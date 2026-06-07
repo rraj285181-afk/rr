@@ -1,0 +1,11 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "hero-india",
+      "description": "Abstract digital India map",
+      "imageUrl": "https://picsum.photos/seed/bharat1/1200/600",
+      "imageHint": "digital india"
+    }
+  ]
+}
