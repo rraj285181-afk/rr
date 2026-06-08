@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { ThemeProvider } from '@/components/theme-provider';
-import Script from 'next/script';
 
 export { Metadata };
 
@@ -25,12 +24,12 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
         
         {/* Official AdSense Script - Standard Integration */}
-        <Script
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5471667535888198"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
         />
+        <meta name="google-adsense-account" content="ca-pub-5471667535888198" />
       </head>
       <body className="font-body antialiased selection:bg-primary/30">
         <ThemeProvider
