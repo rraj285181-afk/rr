@@ -21,6 +21,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+
 /**
  * Unified helper to parse URLs, emails, and phone numbers, turning them into beautiful links.
  */
@@ -332,6 +333,8 @@ export default function ServiceDetails() {
 
 
 
+
+
             <AdBanner adSlot="3693488562" variant="horizontal" className="my-0" />
 
             <div className="pt-8 border-t flex flex-col items-center gap-6">
@@ -356,6 +359,7 @@ export default function ServiceDetails() {
       </main>
 
       <Concierge />
+
     </div>
   );
 }

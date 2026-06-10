@@ -23,10 +23,15 @@ import {
   FileImage,
   RefreshCw,
   Clock,
-  ShieldCheck
+  ShieldCheck,
+  Trash2,
+  ArrowUp,
+  ArrowDown,
+  Plus
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AdBanner } from "@/components/AdBanner";
+import { jsPDF } from "jspdf";
 
 // Preset target removed, custom inputs are default.
 
@@ -79,10 +84,14 @@ export default function ToolsPage() {
 
           {/* Unified Tool Tabs */}
           <Tabs defaultValue="compressor" value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid grid-cols-2 max-w-md mx-auto bg-muted/60 p-1 border rounded-2xl h-12 shadow-sm">
+            <TabsList className="grid grid-cols-3 max-w-lg mx-auto bg-muted/60 p-1 border rounded-2xl h-12 shadow-sm">
               <TabsTrigger value="compressor" className="rounded-xl font-bold text-xs uppercase tracking-wider transition-all">
                 <Camera className="w-4 h-4 mr-2" />
                 Image Resizer
+              </TabsTrigger>
+              <TabsTrigger value="pdf-converter" className="rounded-xl font-bold text-xs uppercase tracking-wider transition-all">
+                <FileSpreadsheet className="w-4 h-4 mr-2" />
+                Image to PDF
               </TabsTrigger>
               <TabsTrigger value="calculator" className="rounded-xl font-bold text-xs uppercase tracking-wider transition-all">
                 <Calendar className="w-4 h-4 mr-2" />
@@ -95,7 +104,12 @@ export default function ToolsPage() {
               <ImageCompressorTool />
             </TabsContent>
 
-            {/* Tab 2: Age Calculator */}
+            {/* Tab 2: PDF Converter */}
+            <TabsContent value="pdf-converter">
+              <PDFConverterTool />
+            </TabsContent>
+
+            {/* Tab 3: Age Calculator */}
             <TabsContent value="calculator">
               <AgeCalculatorTool />
             </TabsContent>
@@ -633,6 +647,289 @@ function AgeCalculatorTool() {
         )}
 
       </div>
+    </div>
+  );
+}
+
+// -------------------------------------------------------------
+// IMAGE TO PDF CONVERTER & COMPRESSOR COMPONENT
+// -------------------------------------------------------------
+function PDFConverterTool() {
+  const [files, setFiles] = useState<PDFFile[]>([]);
+  const [quality, setQuality] = useState<number>(0.85);
+  const [scale, setScale] = useState<number>(0.9);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const newFiles: PDFFile[] = Array.from(e.target.files).map(file => ({
+        id: Math.random().toString(36).substring(7),
+        file,
+        previewUrl: URL.createObjectURL(file),
+        sizeKB: file.size / 1024
+      }));
+      setFiles(prev => [...prev, ...newFiles]);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    if (e.dataTransfer.files) {
+      const newFiles: PDFFile[] = Array.from(e.dataTransfer.files)
+        .filter(file => file.type.startsWith('image/'))
+        .map(file => ({
+          id: Math.random().toString(36).substring(7),
+          file,
+          previewUrl: URL.createObjectURL(file),
+          sizeKB: file.size / 1024
+        }));
+      setFiles(prev => [...prev, ...newFiles]);
+    }
+  };
+
+  const removeFile = (id: string) => {
+    setFiles(prev => {
+      const target = prev.find(f => f.id === id);
+      if (target) URL.revokeObjectURL(target.previewUrl);
+      return prev.filter(f => f.id !== id);
+    });
+  };
+
+  const moveUp = (idx: number) => {
+    if (idx === 0) return;
+    setFiles(prev => {
+      const list = [...prev];
+      const temp = list[idx];
+      list[idx] = list[idx - 1];
+      list[idx - 1] = temp;
+      return list;
+    });
+  };
+
+  const moveDown = (idx: number) => {
+    if (idx === files.length - 1) return;
+    setFiles(prev => {
+      const list = [...prev];
+      const temp = list[idx];
+      list[idx] = list[idx + 1];
+      list[idx + 1] = temp;
+      return list;
+    });
+  };
+
+  const compressImage = (file: File, scaleFactor: number, qual: number): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const targetW = img.width * scaleFactor;
+          const targetH = img.height * scaleFactor;
+          canvas.width = targetW;
+          canvas.height = targetH;
+          
+          const ctx = canvas.getContext("2d");
+          if (!ctx) {
+            reject("Canvas context failure");
+            return;
+          }
+          ctx.drawImage(img, 0, 0, targetW, targetH);
+          resolve(canvas.toDataURL("image/jpeg", qual));
+        };
+        img.onerror = () => reject("Image load failure");
+        img.src = e.target?.result as string;
+      };
+      reader.onerror = () => reject("File read failure");
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const generatePDF = async () => {
+    if (files.length === 0) return;
+    setIsGenerating(true);
+
+    try {
+      const doc = new jsPDF({
+        orientation: "portrait",
+        unit: "px",
+        format: "a4"
+      });
+
+      const a4Width = doc.internal.pageSize.getWidth();
+      const a4Height = doc.internal.pageSize.getHeight();
+
+      for (let i = 0; i < files.length; i++) {
+        if (i > 0) doc.addPage();
+        const fileObj = files[i];
+        
+        // Compress and scale image client-side via canvas
+        const imgDataUrl = await compressImage(fileObj.file, scale, quality);
+        
+        // Add compressed JPEG to A4 PDF page fitting the width & height
+        doc.addImage(imgDataUrl, "JPEG", 0, 0, a4Width, a4Height, undefined, "FAST");
+      }
+
+      doc.save("job_indians_documents.pdf");
+    } catch (e) {
+      console.error("PDF Generation failed:", e);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleReset = () => {
+    files.forEach(f => URL.revokeObjectURL(f.previewUrl));
+    setFiles([]);
+  };
+
+  interface PDFFile {
+    id: string;
+    file: File;
+    previewUrl: string;
+    sizeKB: number;
+  }
+
+  return (
+    <div className="glass-card rounded-3xl p-6 md:p-8 space-y-6 md:space-y-8 animate-in fade-in-50">
+      
+      {/* Upload Zone */}
+      <div
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        onClick={() => fileInputRef.current?.click()}
+        className="border-2 border-dashed border-border/60 hover:border-primary/50 rounded-3xl p-8 text-center cursor-pointer transition-all duration-300 bg-muted/5 group space-y-3 flex flex-col items-center justify-center min-h-[180px]"
+      >
+        <div className="p-3 bg-primary/5 rounded-2xl border border-primary/10 group-hover:scale-110 transition-transform">
+          <Upload className="w-6 h-6 text-primary" />
+        </div>
+        <div>
+          <p className="font-bold text-sm text-foreground">Select Multiple Images or Drag & Drop</p>
+          <p className="text-xs text-muted-foreground mt-0.5">Supports JPG, JPEG, PNG. Images will be compiled into a single A4 PDF.</p>
+        </div>
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          accept="image/*"
+          multiple
+          className="hidden"
+        />
+      </div>
+
+      {files.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start border-t border-border/20 pt-6">
+          
+          {/* File Lists & Sorting */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="font-bold text-base flex items-center gap-2">
+                <FileSpreadsheet className="w-5 h-5 text-primary" />
+                Uploaded Pages ({files.length})
+              </h3>
+              <Button variant="ghost" size="sm" onClick={handleReset} className="text-xs font-bold text-destructive hover:bg-destructive/10">
+                Clear All
+              </Button>
+            </div>
+
+            {/* List scroll area */}
+            <div className="space-y-2 max-h-[360px] overflow-y-auto pr-1">
+              {files.map((fileObj, idx) => (
+                <div key={fileObj.id} className="flex items-center justify-between p-3 bg-muted/10 border border-border/40 rounded-2xl gap-3">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <img src={fileObj.previewUrl} alt="Thumbnail" className="w-10 h-10 object-cover rounded-lg border bg-card" />
+                    <div className="min-w-0">
+                      <span className="font-bold text-xs text-foreground block truncate">{fileObj.file.name}</span>
+                      <span className="text-[10px] text-muted-foreground font-semibold">Page {idx + 1} • {fileObj.sizeKB.toFixed(1)} KB</span>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-1 shrink-0">
+                    <Button variant="ghost" size="icon" onClick={() => moveUp(idx)} disabled={idx === 0} className="w-8 h-8 rounded-lg">
+                      <ArrowUp className="w-3.5 h-3.5" />
+                    </Button>
+                    <Button variant="ghost" size="icon" onClick={() => moveDown(idx)} disabled={idx === files.length - 1} className="w-8 h-8 rounded-lg">
+                      <ArrowDown className="w-3.5 h-3.5" />
+                    </Button>
+                    <Button variant="ghost" size="icon" onClick={() => removeFile(fileObj.id)} className="w-8 h-8 rounded-lg text-destructive hover:bg-destructive/10">
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Compress & Generation settings */}
+          <div className="space-y-6 bg-muted/5 border border-border/40 p-6 rounded-3xl">
+            <h3 className="font-bold text-base">PDF Optimization</h3>
+
+            {/* Quality Slider */}
+            <div className="space-y-3 p-4 bg-card border rounded-2xl">
+              <div className="flex justify-between items-center text-xs font-bold">
+                <span className="text-muted-foreground">Image Quality</span>
+                <span className="text-primary font-extrabold">{Math.round(quality * 100)}%</span>
+              </div>
+              <Slider
+                min={0.1}
+                max={1.0}
+                step={0.05}
+                value={[quality]}
+                onValueChange={(val) => setQuality(val[0])}
+                className="py-2"
+              />
+              <p className="text-[10px] text-muted-foreground leading-normal">
+                Quality kam karne se final PDF file ka size (KB) bohot kam ho jata hai.
+              </p>
+            </div>
+
+            {/* Scaling Slider */}
+            <div className="space-y-3 p-4 bg-card border rounded-2xl">
+              <div className="flex justify-between items-center text-xs font-bold">
+                <span className="text-muted-foreground">Image Resolution Scale</span>
+                <span className="text-primary font-extrabold">{Math.round(scale * 100)}%</span>
+              </div>
+              <Slider
+                min={0.3}
+                max={1.0}
+                step={0.05}
+                value={[scale]}
+                onValueChange={(val) => setScale(val[0])}
+                className="py-2"
+              />
+              <p className="text-[10px] text-muted-foreground leading-normal">
+                Scale kam karne se images ke pixels resize ho jaate hain, jisse size aur bhi drop ho jata hai.
+              </p>
+            </div>
+
+            {/* Compile PDF Button */}
+            <Button
+              onClick={generatePDF}
+              disabled={isGenerating || files.length === 0}
+              className="w-full h-12 rounded-2xl font-bold shadow-lg flex items-center justify-center gap-2"
+            >
+              {isGenerating ? (
+                <>
+                  <RefreshCw className="w-4 h-4 animate-spin" />
+                  Generating Compressed PDF...
+                </>
+              ) : (
+                <>
+                  <Download className="w-4 h-4" />
+                  Compile & Download PDF
+                </>
+              )}
+            </Button>
+          </div>
+
+        </div>
+      )}
     </div>
   );
 }

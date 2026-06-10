@@ -9,6 +9,7 @@ import { Zap } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
+
 export default function Home() {
 
   return (
@@ -60,6 +61,8 @@ export default function Home() {
 
             {/* Main Content */}
             <div className="p-8 md:p-12 space-y-12">
+
+
               <Marquee />
 
               {/* Utility Tools Banner */}
@@ -133,6 +136,7 @@ export default function Home() {
         </main>
       </div>
       <Concierge />
+
     </div>
   );
 }
