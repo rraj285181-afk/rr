@@ -7,6 +7,7 @@ import { Concierge } from "@/components/Concierge";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Zap } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
 
@@ -32,6 +33,7 @@ export default function Home() {
           <div className="flex items-center gap-2 md:gap-4 overflow-hidden">
             <div className="hidden lg:flex items-center gap-6 text-[10px] font-bold uppercase tracking-widest mr-4 opacity-80">
               <a href="#directory" className="hover:text-primary transition-colors cursor-pointer relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all hover:after:w-full">Directory</a>
+              <Link href="/tools" className="hover:text-primary transition-colors cursor-pointer relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all hover:after:w-full">Aspirant Tools</Link>
             </div>
             <StatusTracker />
             <ThemeToggle />
@@ -59,6 +61,25 @@ export default function Home() {
             {/* Main Content */}
             <div className="p-8 md:p-12 space-y-12">
               <Marquee />
+
+              {/* Utility Tools Banner */}
+              <div className="bg-gradient-to-r from-indigo-500/10 via-primary/5 to-cyan-500/10 dark:from-indigo-500/5 dark:via-primary/5 dark:to-cyan-500/5 border border-primary/20 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm hover:shadow-md transition-all">
+                <div className="flex items-center gap-4 text-center sm:text-left flex-col sm:flex-row">
+                  <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary shrink-0">
+                    <Zap className="w-6 h-6 animate-pulse" />
+                  </div>
+                  <div>
+                    <h3 className="font-extrabold text-sm md:text-base text-foreground">Aspirant Utilities Launched!</h3>
+                    <p className="text-xs text-muted-foreground mt-0.5 max-w-md">
+                      Resize & compress your Photo/Signature and calculate your exact Age Eligibility criteria.
+                    </p>
+                  </div>
+                </div>
+                <Button asChild size="sm" className="rounded-xl font-bold text-xs uppercase tracking-wider shrink-0 px-5 shadow-md hover:scale-105 transition-all">
+                  <Link href="/tools">Open Tools Hub →</Link>
+                </Button>
+              </div>
+
               <ServiceGrid />
               <AdBanner adSlot="3693488562" variant="horizontal" className="my-0" />
             </div>
@@ -84,7 +105,7 @@ export default function Home() {
                     <li><Link href="/?category=Results#directory" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-3.5 md:group-hover:w-4 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />Exam Results</Link></li>
                     <li><Link href="/?category=Admit Cards#directory" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-3.5 md:group-hover:w-4 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />Admit Cards</Link></li>
                     <li><Link href="/?category=Current Jobs#directory" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-3.5 md:group-hover:w-4 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />Current Jobs</Link></li>
-                    <li><Link href="/?category=Scholarships#directory" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-3.5 md:group-hover:w-4 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />Scholarships</Link></li>
+                    <li><Link href="/tools" className="hover:text-primary transition-colors flex items-center group"><ChevronRightIcon className="w-0 opacity-0 group-hover:w-3.5 md:group-hover:w-4 group-hover:mr-1 md:group-hover:mr-2 group-hover:opacity-100 transition-all duration-300 shrink-0" />Aspirant Tools</Link></li>
                   </ul>
                 </div>
 

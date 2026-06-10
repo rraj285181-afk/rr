@@ -267,10 +267,15 @@ export default function ServiceDetails() {
     <div className="min-h-screen bg-background pb-20">
       <nav className="sticky top-0 z-50 bg-background/90 backdrop-blur-md border-b">
         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="inline-flex items-center gap-2 text-primary font-bold hover:text-primary/80 transition-colors group">
-            <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-            <span className="hidden sm:inline">Portal Home</span>
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link href="/" className="inline-flex items-center gap-2 text-primary font-bold hover:text-primary/80 transition-colors group">
+              <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+              <span className="hidden sm:inline">Portal Home</span>
+            </Link>
+            <Link href="/tools" className="text-sm font-bold hover:text-primary transition-colors hidden md:inline-block">
+              Aspirant Tools
+            </Link>
+          </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 mr-2">
               <div className="w-7 h-7 bg-primary rounded-full flex items-center justify-center shadow-md">
